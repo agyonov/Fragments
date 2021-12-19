@@ -22,6 +22,7 @@ namespace Fragments
             base.OnCreate();
 
             // Add here some init code
+            Startup.Init(Assets);
         }
     }
 }
