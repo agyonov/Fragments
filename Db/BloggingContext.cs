@@ -24,7 +24,7 @@ namespace Db
 
     public class Blog
     {
-        public int BlogId { get; set; }
+        public int Id { get; set; }
         public string? Url { get; set; }
 
         public List<Post> Posts { get; } = default!;
@@ -32,7 +32,7 @@ namespace Db
 
     public class Post
     {
-        public int PostId { get; set; }
+        public int Id { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
 

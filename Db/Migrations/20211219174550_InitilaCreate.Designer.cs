@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Db.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211219174550_InitilaCreate")]
+    partial class InitilaCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,22 +20,21 @@ namespace Db.Migrations
 
             modelBuilder.Entity("Db.Blog", b =>
                 {
-                    b.Property<int>("BlogId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("BlogId");
+                    b.HasKey("Id");
 
                     b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Db.Post", b =>
                 {
-                    b.Property<int>("PostId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -43,14 +42,12 @@ namespace Db.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("PostId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BlogId");
 

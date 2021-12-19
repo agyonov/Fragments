@@ -22,10 +22,13 @@ namespace Fragments
                 // Create generic host
                 var host = new HostBuilder();
 
+                var folder = Environment.SpecialFolder.Personal;
+                var path = Environment.GetFolderPath(folder);
+
                 // Set sillly thing here
                 host.ConfigureHostConfiguration(con =>
                 {
-                    con.AddCommandLine(new string[] { $"ContentRoot={Directory.GetCurrentDirectory()}" });
+                    con.AddCommandLine(new string[] { $"ContentRoot={path}" });
                 });
 
                 // Add app some configuration from JSON data
