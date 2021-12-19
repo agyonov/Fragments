@@ -16,7 +16,7 @@ namespace Fragments.Model
                                       "Richard III",
                                       "Merchant of Venice",
                                       "Othello",
-                                      "King Lear"
+                                      "King Lear" 
                                     };
 
         public static string[] Dialogue = {
