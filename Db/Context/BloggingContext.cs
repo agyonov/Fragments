@@ -7,6 +7,8 @@ namespace Db
         public DbSet<Blog> Blogs { get; set; } = default!;
         public DbSet<Post> Posts { get; set; } = default!;
 
+        #region Constructors and configurations
+
         private string dbPath { get; }
 
         public BloggingContext()
@@ -28,8 +30,13 @@ namespace Db
         // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite($"Data Source={dbPath}");
+            // Check
+            if (!options.IsConfigured) {
+                options.UseSqlite($"Data Source={dbPath}");
+            }
         }
+
+        #endregion Constructors and configurations
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -11,13 +11,13 @@ namespace Fragments
 
         }
 
-        public override void OnCreate()
+        public override async void OnCreate()
         {
             // Call parent
             base.OnCreate();
 
             // Add here some init code
-            Startup.Init(Assets);
+            await Startup.Init(Assets);
         }
     }
 }

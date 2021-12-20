@@ -1,6 +1,11 @@
 {
-  "Kestrel": {
-    "Version":  1,
-    "Name":  "This is my world!"
+  "AppSettings": {
+    "MinThreads": 4,
+    "MinIOThreads": 4,
+    "MaxQueueRows": 50,
+    "DbCmdTimeout": 5,
+    "ApiCmdTimeout": 15,
+    "EFBatchSize": 50,
+    "DbNameMain":  "my_blogging.db"
   }
 }

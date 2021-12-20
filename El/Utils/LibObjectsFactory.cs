@@ -37,7 +37,11 @@ namespace El.Utils
             if (string.IsNullOrWhiteSpace(_connectionString)) {
                 var folder = Environment.SpecialFolder.LocalApplicationData;
                 var path = Environment.GetFolderPath(folder);
-                _connectionString = Path.Join(path, "blogging.db");
+                if (RegistrationModuleEx.config != null && RegistrationModuleEx.config.App != null) {
+                    _connectionString = Path.Join(path, RegistrationModuleEx.config.App.DbNameMain);
+                } else {
+                    _connectionString = Path.Join(path, "blogging.db");
+                }
             }
 
             // Set it
@@ -45,6 +49,14 @@ namespace El.Utils
                       .ConfigureWarnings(wc =>
                       {
                           wc.Ignore(CoreEventId.DetachedLazyLoadingWarning);
+                      })
+                      .UseSqlite($"Data Source={_connectionString}", opt =>
+                      {
+                          // Check
+                          if (RegistrationModuleEx.config != null && RegistrationModuleEx.config.App != null) {
+                              opt.CommandTimeout(RegistrationModuleEx.config.App.DbCmdTimeout)
+                                 .MaxBatchSize(RegistrationModuleEx.config.App.EFBatchSize);
+                          }
                       });
 
             // Create
