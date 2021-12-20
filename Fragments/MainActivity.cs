@@ -36,11 +36,9 @@ namespace Fragments
         public override void OnBackPressed()
         {
             var drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            if (drawer != null && drawer.IsDrawerOpen(GravityCompat.Start))
-            {
+            if (drawer != null && drawer.IsDrawerOpen(GravityCompat.Start)) {
                 drawer.CloseDrawer(GravityCompat.Start);
-            } else
-            {
+            } else {
                 base.OnBackPressed();
             }
         }
@@ -54,8 +52,7 @@ namespace Fragments
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
-            if (id == Resource.Id.action_settings)
-            {
+            if (id == Resource.Id.action_settings) {
                 return true;
             }
 
@@ -64,8 +61,7 @@ namespace Fragments
 
         private void FabOnClick(object? sender, EventArgs eventArgs)
         {
-            if (sender != null)
-            {
+            if (sender != null) {
                 View view = (View)sender;
                 Snackbar.Make(view, "Replace with your own action", BaseTransientBottomBar.LengthLong)
                        .SetAction("Action", (view) => { }).Show();
@@ -76,23 +72,17 @@ namespace Fragments
         {
             int id = item.ItemId;
 
-            if (id == Resource.Id.nav_camera)
-            {
+            if (id == Resource.Id.nav_camera) {
                 // Handle the camera action
-            } else if (id == Resource.Id.nav_gallery)
-            {
+            } else if (id == Resource.Id.nav_gallery) {
 
-            } else if (id == Resource.Id.nav_slideshow)
-            {
+            } else if (id == Resource.Id.nav_slideshow) {
 
-            } else if (id == Resource.Id.nav_manage)
-            {
+            } else if (id == Resource.Id.nav_manage) {
 
-            } else if (id == Resource.Id.nav_share)
-            {
+            } else if (id == Resource.Id.nav_share) {
 
-            } else if (id == Resource.Id.nav_send)
-            {
+            } else if (id == Resource.Id.nav_send) {
 
             }
 

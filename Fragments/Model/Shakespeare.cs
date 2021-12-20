@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fragments.Model
+﻿namespace Fragments.Model
 {
     internal class Shakespeare
     {
@@ -16,7 +10,7 @@ namespace Fragments.Model
                                       "Richard III",
                                       "Merchant of Venice",
                                       "Othello",
-                                      "King Lear" 
+                                      "King Lear"
                                     };
 
         public static string[] Dialogue = {

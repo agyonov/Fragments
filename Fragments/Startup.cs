@@ -1,24 +1,18 @@
 ﻿using Android.Content.Res;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fragments
 {
     internal static class Startup
     {
         // Store some general
-        private static IHost? bHost = null;
+        private static IHost bHost = default!;
 
         public static void Init(AssetManager? asset)
         {
             // Check if correct
-            if (asset != null)
-            {
+            if (asset != null) {
                 // Create generic host
                 var host = new HostBuilder();
 
@@ -32,8 +26,7 @@ namespace Fragments
                 });
 
                 // Add app some configuration from JSON data
-                using (var setStream = asset.Open("app.settings.json"))
-                {
+                using (var setStream = asset.Open("app.settings.json")) {
                     host.ConfigureAppConfiguration(con =>
                     {
                         con.AddJsonStream(setStream);
@@ -42,9 +35,9 @@ namespace Fragments
                     // Build it
                     bHost = host.Build();
                 }
+            } else {
+                throw new Exception("AssetManager is requiered. It must be not null object reference!");
             }
-
-
         }
     }
 }
