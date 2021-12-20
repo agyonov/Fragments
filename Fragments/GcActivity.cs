@@ -51,13 +51,13 @@ namespace Fragments
 
         protected override void Dispose(bool disposing)
         {
+            // call parent
+            base.Dispose(disposing);
+
             try {
                 // further dispose
                 scope.Dispose();
             } catch { }
-
-            // call parent
-            base.Dispose(disposing);
         }
     }
 }

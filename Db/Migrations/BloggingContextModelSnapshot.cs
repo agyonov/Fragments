@@ -20,36 +20,49 @@ namespace Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
 
                     b.Property<string>("Url")
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
+                        .HasColumnName("url")
+                        .UseCollation("CI_AS");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PK_R_BLOG");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("r_blog", (string)null);
                 });
 
             modelBuilder.Entity("Db.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
 
                     b.Property<int>("BlogId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id_blog");
 
                     b.Property<string>("Content")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text")
+                        .HasColumnName("content")
+                        .UseCollation("CI_AS");
 
                     b.Property<string>("Title")
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
+                        .HasColumnName("title")
+                        .UseCollation("CI_AS");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PK_R_POST");
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("r_post", (string)null);
                 });
 
             modelBuilder.Entity("Db.Post", b =>
@@ -58,7 +71,8 @@ namespace Db.Migrations
                         .WithMany("Posts")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_R_POST_R_BLOG");
 
                     b.Navigation("Blog");
                 });

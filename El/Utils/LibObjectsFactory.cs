@@ -1,4 +1,5 @@
 ﻿using Db;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -45,13 +46,17 @@ namespace El
                 }
             }
 
+            // Create connection
+            var conSqlLite = new SqliteConnection($"Data Source={_connectionString}");
+            conSqlLite.CreateCollation(BloggingContext.CI_AS, (x, y) => string.Compare(x, y, ignoreCase: true));
+
             // Set it
             dbContxOpt.UseLazyLoadingProxies(true)
                       .ConfigureWarnings(wc =>
                       {
                           wc.Ignore(CoreEventId.DetachedLazyLoadingWarning);
                       })
-                      .UseSqlite($"Data Source={_connectionString}", opt =>
+                      .UseSqlite(conSqlLite, opt =>
                       {
                           // Check
                           if (RegistrationModuleEx.config != null && RegistrationModuleEx.config.App != null) {

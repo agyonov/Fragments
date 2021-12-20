@@ -1,4 +1,6 @@
-﻿namespace Db
+﻿using System.Text.Json.Serialization;
+
+namespace Db
 {
     public class Post
     {
@@ -7,6 +9,7 @@
         public string? Content { get; set; }
 
         public int BlogId { get; set; }
+        [JsonIgnore]
         public virtual Blog Blog { get; set; } = default!;
     }
 }

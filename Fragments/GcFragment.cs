@@ -39,25 +39,24 @@ namespace Fragments
             VM = ServiceProvider.GetRequiredService<T>();
         }
 
-
         public override void OnDestroy()
         {
-            // further dispose
-            scope.Dispose();
-
             // call parent
             base.OnDestroy();
+
+            // further dispose
+            scope.Dispose();
         }
 
         protected override void Dispose(bool disposing)
         {
+            // call parent
+            base.Dispose(disposing);
+
             try {
                 // further dispose
                 scope.Dispose();
             } catch { }
-
-            // call parent
-            base.Dispose(disposing);
         }
     }
 }

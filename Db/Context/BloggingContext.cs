@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 namespace Db
 {
     public partial class BloggingContext : DbContext
     {
-        public DbSet<Blog> Blogs { get; set; } = default!;
-        public DbSet<Post> Posts { get; set; } = default!;
+        public const string CI_AS = "CI_AS";
+
+        public DbSet<Blog> Blog { get; set; } = default!;
+        public DbSet<Post> Post { get; set; } = default!;
 
         #region Constructors and configurations
 
@@ -32,9 +35,13 @@ namespace Db
         {
             // Check
             if (!options.IsConfigured) {
-                options.UseSqlite($"Data Source={dbPath}");
+                var con = new SqliteConnection($"Data Source={dbPath}");
+                con.CreateCollation(CI_AS, (x, y) => string.Compare(x, y, ignoreCase: true));
+                options.UseSqlite(con);
             }
         }
+
+
 
         #endregion Constructors and configurations
 
@@ -42,6 +49,55 @@ namespace Db
         {
             // Call for additional definition
             OnModelCreatingPartial(modelBuilder);
+
+            modelBuilder.Entity<Blog>(entity => { 
+                entity.ToTable("r_blog");
+
+                entity.Property(b => b.Id)
+                      .HasColumnName("id")
+                      .ValueGeneratedOnAdd();
+
+                entity.Property(b => b.Url)
+                      .HasColumnName("url")
+                      .HasColumnType("varchar(256)")
+                      .HasMaxLength(256)
+                      .UseCollation(CI_AS);
+
+                entity.HasKey(b => b.Id)
+                      .HasName("PK_R_BLOG");
+            });
+
+            modelBuilder.Entity<Post>(entity =>
+            {
+                entity.ToTable("r_post");
+
+                entity.Property(b => b.Id)
+                      .HasColumnName("id")
+                      .ValueGeneratedOnAdd();
+
+                entity.Property(b => b.Title)
+                      .HasColumnName("title")
+                      .HasColumnType("varchar(256)")
+                      .HasMaxLength(256)
+                      .UseCollation(CI_AS);
+
+                entity.Property(b => b.Content)
+                     .HasColumnName("content")
+                     .HasColumnType("text")
+                     .UseCollation(CI_AS);
+
+                entity.Property(b => b.BlogId)
+                     .HasColumnName("id_blog");
+
+                entity.HasKey(b => b.Id)
+                      .HasName("PK_R_POST");
+
+                modelBuilder.Entity<Post>()
+                   .HasOne(p => p.Blog)
+                   .WithMany(b => b.Posts)
+                   .HasForeignKey(p => p.BlogId)
+                   .HasConstraintName("FK_R_POST_R_BLOG"); 
+            });
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
