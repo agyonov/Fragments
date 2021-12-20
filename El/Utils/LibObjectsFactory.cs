@@ -35,11 +35,12 @@ namespace El.Utils
 
             // Check
             if (string.IsNullOrWhiteSpace(_connectionString)) {
-                var folder = Environment.SpecialFolder.LocalApplicationData;
-                var path = Environment.GetFolderPath(folder);
+                // See what we have
                 if (RegistrationModuleEx.config != null && RegistrationModuleEx.config.App != null) {
-                    _connectionString = Path.Join(path, RegistrationModuleEx.config.App.DbNameMain);
+                    _connectionString = Path.Join(RegistrationModuleEx.config.DataBasePath, RegistrationModuleEx.config.App.DbNameMain);
                 } else {
+                    var folder = Environment.SpecialFolder.ApplicationData;
+                    var path = Environment.GetFolderPath(folder);
                     _connectionString = Path.Join(path, "blogging.db");
                 }
             }
