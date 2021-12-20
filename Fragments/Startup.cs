@@ -1,6 +1,6 @@
 ﻿using Android.Content.Res;
 using Db;
-using El.Utils;
+using El;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

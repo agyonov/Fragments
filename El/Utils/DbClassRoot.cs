@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 
-namespace El.Utils
+namespace El
 {
     /// <summary>
     /// Root class to acces DB
     /// </summary>
-    public class DbClassRoot : ClassRoot
+    public abstract class DbClassRoot : ClassRoot
     {
         #region Constructor and Destructor
 

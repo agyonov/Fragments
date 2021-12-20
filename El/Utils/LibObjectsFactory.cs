@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace El.Utils
+namespace El
 {
     /// <summary>
     /// The implementation

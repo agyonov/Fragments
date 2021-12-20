@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text;
 
-namespace El.Utils
+namespace El
 {
     public class CacheRepository
     {

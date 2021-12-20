@@ -3,7 +3,7 @@ using El.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace El.Utils
+namespace El
 {
     public static class RegistrationModuleEx
     {
@@ -23,7 +23,6 @@ namespace El.Utils
             // Register DB Connection & adder special components
             builder.AddTransient(cont => (new LibObjectsFactory(cont)).CreateInstanceDb());
 
-
             // Get public non-abstract classes
             var realClasses = from c in typeof(RegistrationModuleEx).Assembly.ExportedTypes
                               where c.IsClass && !c.IsAbstract
@@ -31,6 +30,8 @@ namespace El.Utils
             foreach (var c in realClasses) {
                 //addapter
                 if (c.IsAssignableTo(typeof(DbClassRoot))) {
+                    builder.TryAddScoped(c);
+                } else if (c.IsAssignableTo(typeof(IRootVN))) {
                     builder.TryAddScoped(c);
                 } else if (c.Namespace != null && c.Namespace.StartsWith("GConsMcbLibrary.Nomens")) {
                     builder.TryAddTransient(c);
@@ -41,6 +42,11 @@ namespace El.Utils
                 //    builder.AddTransient(c);
                 //} 
             }
+
+            // Register utilities
+            builder.Add(new ServiceDescriptor(
+                    typeof(Lazy<>), typeof(LazyImpl<>), ServiceLifetime.Transient
+                ));
         }
 
         // Store

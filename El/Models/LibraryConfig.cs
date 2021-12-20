@@ -3,7 +3,7 @@
     /// <summary>
     /// Library configuration options
     /// </summary>
-    public class LibraryConfig
+    public record LibraryConfig
     {
         /// <summary>
         /// Root user path

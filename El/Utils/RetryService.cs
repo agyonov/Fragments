@@ -1,7 +1,7 @@
 ﻿using Polly;
 using Polly.Retry;
 
-namespace El.Utils
+namespace El
 {
     public class RetryService : Interfaces.IRetryService
     {

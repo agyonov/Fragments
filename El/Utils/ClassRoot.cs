@@ -1,4 +1,4 @@
-﻿namespace El.Utils
+﻿namespace El
 {
     /// <summary>
     /// A class that is going to be a root class for all other classes in the project.

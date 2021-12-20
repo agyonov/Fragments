@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace El.Utils
+namespace El
 {
     /// <summary>
     /// Enables the efficient, dynamic composition of query predicates.

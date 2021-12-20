@@ -3,6 +3,7 @@ using Android.Views;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
+using Fragments.Fragments;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
@@ -73,7 +74,12 @@ namespace Fragments
             int id = item.ItemId;
 
             if (id == Resource.Id.nav_camera) {
-                // Handle the camera action
+                // Get fragment manager
+                SupportFragmentManager
+                    .BeginTransaction()
+                    .SetReorderingAllowed(true)
+                    .Replace(Resource.Id.main_fragment_container_view, new GHelloWorldFragment(), null)
+                    .Commit();
             } else if (id == Resource.Id.nav_gallery) {
 
             } else if (id == Resource.Id.nav_slideshow) {
