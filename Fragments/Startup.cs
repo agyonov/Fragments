@@ -14,7 +14,7 @@ namespace Fragments
         private static IHost bHost = default!;
         public static IServiceProvider ServiceProvider => bHost.Services;
 
-        public static async Task Init(AssetManager? asset)
+        public static void Init(AssetManager? asset)
         {
             // Check if correct
             if (asset != null) {
@@ -56,7 +56,7 @@ namespace Fragments
             // Migrate
             using (var scope = ServiceProvider.CreateScope())
             using (var db = scope.ServiceProvider.GetRequiredService<BloggingContext>())
-                await db.Database.MigrateAsync();
+                db.Database.Migrate();
         }
 
         /// <summary>

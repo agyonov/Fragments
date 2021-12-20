@@ -47,9 +47,7 @@ namespace Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Call for additional definition
-            OnModelCreatingPartial(modelBuilder);
-
+            // Configure Blog
             modelBuilder.Entity<Blog>(entity => { 
                 entity.ToTable("r_blog");
 
@@ -67,6 +65,7 @@ namespace Db
                       .HasName("PK_R_BLOG");
             });
 
+            // Configure Post
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.ToTable("r_post");
@@ -98,6 +97,9 @@ namespace Db
                    .HasForeignKey(p => p.BlogId)
                    .HasConstraintName("FK_R_POST_R_BLOG"); 
             });
+
+            // Call for additional definition
+            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
