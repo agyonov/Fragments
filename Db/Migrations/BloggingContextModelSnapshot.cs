@@ -65,6 +65,25 @@ namespace Db.Migrations
                     b.ToTable("r_post", (string)null);
                 });
 
+            modelBuilder.Entity("Db.StaticData", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)")
+                        .HasColumnName("version")
+                        .UseCollation("CI_AS");
+
+                    b.HasKey("Id")
+                        .HasName("PK_R_STATIC_DATA");
+
+                    b.ToTable("r_static_data", (string)null);
+                });
+
             modelBuilder.Entity("Db.Post", b =>
                 {
                     b.HasOne("Db.Blog", "Blog")

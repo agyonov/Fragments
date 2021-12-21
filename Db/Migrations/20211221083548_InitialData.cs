@@ -4,7 +4,7 @@
 
 namespace Db.Migrations
 {
-    public partial class InitilaCreate : Migration
+    public partial class InitialData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,18 @@ namespace Db.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_R_BLOG", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "r_static_data",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "INTEGER", nullable: false),
+                    version = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false, collation: "CI_AS")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_R_STATIC_DATA", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +59,6 @@ namespace Db.Migrations
                 table: "r_post",
                 column: "id_blog");
 
-            // load some data
             loadData(migrationBuilder);
         }
 
@@ -55,6 +66,9 @@ namespace Db.Migrations
         {
             migrationBuilder.DropTable(
                 name: "r_post");
+
+            migrationBuilder.DropTable(
+                name: "r_static_data");
 
             migrationBuilder.DropTable(
                 name: "r_blog");

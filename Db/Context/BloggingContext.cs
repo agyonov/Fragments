@@ -9,6 +9,7 @@ namespace Db
 
         public DbSet<Blog> Blog { get; set; } = default!;
         public DbSet<Post> Post { get; set; } = default!;
+        public DbSet<StaticData> StaticData { get; set; } = default!;
 
         #region Constructors and configurations
 
@@ -96,6 +97,24 @@ namespace Db
                    .WithMany(b => b.Posts)
                    .HasForeignKey(p => p.BlogId)
                    .HasConstraintName("FK_R_POST_R_BLOG"); 
+            });
+
+            // Configure StaticData
+            modelBuilder.Entity<StaticData>(entity => {
+                entity.ToTable("r_static_data");
+
+                entity.Property(b => b.Id)
+                      .HasColumnName("id")
+                      .ValueGeneratedNever();
+
+                entity.Property(b => b.Version)
+                      .HasColumnName("version")
+                      .HasColumnType("varchar(256)")
+                      .HasMaxLength(256)
+                      .UseCollation(CI_AS);
+
+                entity.HasKey(b => b.Id)
+                      .HasName("PK_R_STATIC_DATA");
             });
 
             // Call for additional definition
