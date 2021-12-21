@@ -40,7 +40,7 @@ namespace El
                 if (RegistrationModuleEx.config != null && RegistrationModuleEx.config.App != null) {
                     _connectionString = Path.Join(RegistrationModuleEx.config.DataBasePath, RegistrationModuleEx.config.App.DbNameMain);
                 } else {
-                    var folder = Environment.SpecialFolder.ApplicationData;
+                    var folder = Environment.SpecialFolder.Personal;
                     var path = Environment.GetFolderPath(folder);
                     _connectionString = Path.Join(path, "blogging.db");
                 }

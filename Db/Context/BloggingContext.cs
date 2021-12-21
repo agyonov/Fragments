@@ -42,8 +42,6 @@ namespace Db
             }
         }
 
-
-
         #endregion Constructors and configurations
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

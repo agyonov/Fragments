@@ -55,8 +55,9 @@ namespace Fragments
 
             // Migrate
             using (var scope = ServiceProvider.CreateScope())
-            using (var db = scope.ServiceProvider.GetRequiredService<BloggingContext>())
+            using (var db = scope.ServiceProvider.GetRequiredService<BloggingContext>()) {
                 db.Database.Migrate();
+            }
         }
 
         /// <summary>
@@ -68,7 +69,6 @@ namespace Fragments
         {
             // Get some folders
             var folder = Environment.SpecialFolder.Personal;
-            var data = Environment.SpecialFolder.ApplicationData;
 
             // Add Cache
             services.AddDistributedMemoryCache(opt =>
@@ -83,7 +83,7 @@ namespace Fragments
             services.AddElLibrary(new El.Models.LibraryConfig
             {
                 BasePath = Environment.GetFolderPath(folder),
-                DataBasePath = Environment.GetFolderPath(data),
+                DataBasePath = Environment.GetFolderPath(folder),
                 App = appCfg
             });
 
