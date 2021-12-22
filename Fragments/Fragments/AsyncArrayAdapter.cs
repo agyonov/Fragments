@@ -10,23 +10,17 @@ namespace Fragments.Fragments
         private readonly GHelloWorldFragmentVM _Vm;
         private readonly AndroidX.Fragment.App.Fragment _Context;
 
-
         public AsyncArrayAdapter(AndroidX.Fragment.App.Fragment Context, int Resource, GHelloWorldFragmentVM Vm) : base(Context.Context, Resource)
         {
             // Store for usage
             _Vm = Vm;
             _Context = Context;
 
-            _Vm.PropertyChanged += _Vm_PropertyChanged;
+            // Attach events
+            _Vm.PropertyChanged += TitlesListChanged;
 
             //Start loading
             _ = Task.Run(async () => await _Vm.GetTitlesFormDbAsync());
-        }
-
-        private void _Vm_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            // Notify
-            MainThread.BeginInvokeOnMainThread(() => NotifyDataSetChanged());
         }
 
         public override long GetItemId(int position)
@@ -52,6 +46,12 @@ namespace Fragments.Fragments
             textView.Text = _Vm.Titles[position].Name;
 
             return view;
+        }
+
+        private void TitlesListChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            // Notify
+            MainThread.BeginInvokeOnMainThread(() => NotifyDataSetChanged());
         }
     }
 }

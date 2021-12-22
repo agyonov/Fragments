@@ -1,10 +1,12 @@
 ﻿using Android.Content.Res;
 using Db;
 using El;
+using El.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Fragments
 {
@@ -53,6 +55,12 @@ namespace Fragments
                 throw new Exception("AssetManager is requiered. It must be not null object reference!");
             }
 
+            // Set min threads
+            using (var scope = ServiceProvider.CreateScope()) {
+                var appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>(); 
+                ThreadPool.SetMinThreads(appSettings.Value.MinThreads, appSettings.Value.MinIOThreads);
+            }
+            
             // Migrate
             using (var scope = ServiceProvider.CreateScope())
             using (var db = scope.ServiceProvider.GetRequiredService<BloggingContext>()) {

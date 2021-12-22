@@ -1,13 +1,17 @@
 ﻿using Db;
+using El.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace El.BL
 {
     public class GHelloWorldFragmentVM : RootVM
     {
-        public GHelloWorldFragmentVM(BloggingContext efc) : base(efc)
-        {
+        private readonly IOptions<AppSettings> _Sett;
 
+        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett) : base(efc)
+        {
+            _Sett = Sett;
         }
 
         private List<Models.Title> titles = new List<Models.Title>();
@@ -22,8 +26,9 @@ namespace El.BL
             // Run that thing
             var titles = (from b in DB.Blog.AsNoTracking()
                           orderby b.Url
-                          select new Models.Title(b.Id, b.Url ?? string.Empty)
-                                ).ToList();
+                          select new Models.Title(b.Id, b.Url ?? string.Empty))
+                          .Take(_Sett.Value.MaxQueueRows)
+                          .ToList();
 
             // Do some async work
             await Task.Delay(1000);
