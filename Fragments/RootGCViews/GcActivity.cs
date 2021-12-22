@@ -1,17 +1,13 @@
-﻿using El;
+﻿using AndroidX.AppCompat.App;
+using El;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fragments
 {
-    public class GcFragment<T> : AndroidX.Fragment.App.Fragment where T : class, IRootVN
+    public class GcActivity<T> : AppCompatActivity where T : class, IRootVN
     {
         // The scope of the activity
-        private IServiceScope scope;
+        private IServiceScope scope = default!;
 
         // The service provider for the scope
         protected IServiceProvider ServiceProvider => scope.ServiceProvider;
@@ -19,32 +15,41 @@ namespace Fragments
         /// <summary>
         /// The ViewModel for the activity
         /// </summary>
-        protected readonly T VM;
+        private T _VM = default!;
+        protected T VM => _VM;
 
-        public GcFragment() : base()
+        public GcActivity() : base()
         {
-            // Start new scope
-            scope = Startup.ServiceProvider.CreateScope();
 
-            // Create ViewModel
-            VM = ServiceProvider.GetRequiredService<T>();
         }
 
-        public GcFragment(int ContentLayOutId) : base(ContentLayOutId)
-        {
-            // Start new scope
-            scope = Startup.ServiceProvider.CreateScope();
-
-            // Create ViewModel
-            VM = ServiceProvider.GetRequiredService<T>();
-        }
-
-        public override void OnDestroy()
+        protected override void OnCreate(Bundle? savedInstanceState)
         {
             // call parent
+            base.OnCreate(savedInstanceState);
+
+            // Start new scope
+            scope = Startup.ServiceProvider.CreateScope();
+
+            // Create ViewModel
+            _VM = ServiceProvider.GetRequiredService<T>();
+        }
+
+        public GcActivity(int ContentLayOutId) : base(ContentLayOutId)
+        {
+            // Start new scope
+            scope = Startup.ServiceProvider.CreateScope();
+
+            // Create ViewModel
+            _VM = ServiceProvider.GetRequiredService<T>();
+        }
+
+        protected override void OnDestroy()
+        {
+            // Call parent
             base.OnDestroy();
 
-            // further dispose
+            // Free
             scope.Dispose();
         }
 

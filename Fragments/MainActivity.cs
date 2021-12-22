@@ -18,6 +18,9 @@ namespace Fragments
             // Call Parent
             base.OnCreate(savedInstanceState);
 
+            // Init Xamarin Essentials
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
             SetContentView(Resource.Layout.activity_main);
             var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
@@ -74,14 +77,20 @@ namespace Fragments
             int id = item.ItemId;
 
             if (id == Resource.Id.nav_camera) {
+                // Free
+                foreach(var el in SupportFragmentManager.Fragments)
+                SupportFragmentManager
+                    .BeginTransaction()
+                    .SetReorderingAllowed(true)
+                    .Remove(el)
+                    .Commit();
+            } else if (id == Resource.Id.nav_gallery) {
                 // Get fragment manager
                 SupportFragmentManager
                     .BeginTransaction()
                     .SetReorderingAllowed(true)
                     .Replace(Resource.Id.main_fragment_container_view, new GHelloWorldFragment(), null)
                     .Commit();
-            } else if (id == Resource.Id.nav_gallery) {
-
             } else if (id == Resource.Id.nav_slideshow) {
 
             } else if (id == Resource.Id.nav_manage) {
@@ -98,6 +107,7 @@ namespace Fragments
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }

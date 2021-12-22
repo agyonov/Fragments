@@ -47,7 +47,8 @@ namespace Db
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure Blog
-            modelBuilder.Entity<Blog>(entity => { 
+            modelBuilder.Entity<Blog>(entity =>
+            {
                 entity.ToTable("r_blog");
 
                 entity.Property(b => b.Id)
@@ -94,11 +95,12 @@ namespace Db
                    .HasOne(p => p.Blog)
                    .WithMany(b => b.Posts)
                    .HasForeignKey(p => p.BlogId)
-                   .HasConstraintName("FK_R_POST_R_BLOG"); 
+                   .HasConstraintName("FK_R_POST_R_BLOG");
             });
 
             // Configure StaticData
-            modelBuilder.Entity<StaticData>(entity => {
+            modelBuilder.Entity<StaticData>(entity =>
+            {
                 entity.ToTable("r_static_data");
 
                 entity.Property(b => b.Id)

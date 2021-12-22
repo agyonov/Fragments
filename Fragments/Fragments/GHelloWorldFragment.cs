@@ -1,10 +1,5 @@
 ﻿using Android.Views;
 using El.BL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fragments.Fragments
 {
@@ -12,14 +7,19 @@ namespace Fragments.Fragments
     {
         public GHelloWorldFragment() : base(Resource.Layout.g_hello_world_fragment)
         {
-        
+
         }
 
-        public override void OnResume()
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            var ha = VM;
-            // Call parent
-            base.OnResume();
+            // call parent
+            base.OnViewCreated(view, savedInstanceState);
+
+            // Get ListView
+            ListView listView = Activity.FindViewById<ListView>(Resource.Id.listViewTitles)!;
+
+            // Attach adapter
+            listView.Adapter = new AsyncArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, VM);
         }
     }
 }

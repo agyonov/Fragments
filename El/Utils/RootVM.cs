@@ -6,7 +6,7 @@ using System.Data;
 
 namespace El
 {
-    public interface IRootVN 
+    public interface IRootVN
     {
         BloggingContext DB { get; }
 

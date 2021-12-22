@@ -1,18 +1,12 @@
-﻿using AndroidX.AppCompat.App;
-using El;
+﻿using El;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fragments
 {
-    public class GcActivity<T> : AppCompatActivity where T : class, IRootVN
+    public class GcFragment<T> : AndroidX.Fragment.App.Fragment where T : class, IRootVN
     {
         // The scope of the activity
-        private IServiceScope scope;
+        private IServiceScope scope = default!;
 
         // The service provider for the scope
         protected IServiceProvider ServiceProvider => scope.ServiceProvider;
@@ -20,32 +14,39 @@ namespace Fragments
         /// <summary>
         /// The ViewModel for the activity
         /// </summary>
-        protected readonly T VM;
+        private T _VM = default!;
+        protected T VM => _VM;
 
-        public GcActivity() : base()
+        public GcFragment() : base()
         {
+
+
+        }
+
+        public GcFragment(int ContentLayOutId) : base(ContentLayOutId)
+        {
+
+
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            // call parent
+            base.OnCreate(savedInstanceState);
+
             // Start new scope
             scope = Startup.ServiceProvider.CreateScope();
 
             // Create ViewModel
-            VM = ServiceProvider.GetRequiredService<T>();
+            _VM = ServiceProvider.GetRequiredService<T>();
         }
 
-        public GcActivity(int ContentLayOutId) : base(ContentLayOutId)
+        public override void OnDestroy()
         {
-            // Start new scope
-            scope = Startup.ServiceProvider.CreateScope();
-
-            // Create ViewModel
-            VM = ServiceProvider.GetRequiredService<T>();
-        }
-
-        protected override void OnDestroy()
-        {
-            // Call parent
+            // call parent
             base.OnDestroy();
 
-            // Free
+            // further dispose
             scope.Dispose();
         }
 
