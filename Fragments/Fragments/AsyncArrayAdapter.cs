@@ -18,14 +18,15 @@ namespace Fragments.Fragments
 
             // Attach events
             _Vm.PropertyChanged += TitlesListChanged;
-
-            //Start loading
-            _ = Task.Run(async () => await _Vm.GetTitlesFormDbAsync());
         }
 
         public override long GetItemId(int position)
         {
-            return position;
+            if (_Vm.Titles.Count < position) {
+                return _Vm.Titles[position].Id;
+            } else {
+                return 0;
+            }
         }
 
         /// <summary>

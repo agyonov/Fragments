@@ -21,5 +21,14 @@ namespace Fragments.Fragments
             // Attach adapter
             listView.Adapter = new AsyncArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, VM);
         }
+
+        public override void OnStart()
+        {
+            // call parent
+            base.OnStart();
+
+            //Start loading
+            _ = Task.Run(async () => await VM.GetTitlesFormDbAsync());
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace El.BL
                           .ToList();
 
             // Do some async work
-            await Task.Delay(1000);
+            await Task.Delay(100);
 
             // Set that data
             Titles = titles;

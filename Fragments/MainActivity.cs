@@ -13,6 +13,9 @@ namespace Fragments
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
+        private const string SLECTED_ITEM_ID = "SLECTED_ITEM_ID";
+        private int selectedItemId = 0;
+
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             // Call Parent
@@ -34,7 +37,20 @@ namespace Fragments
             toggle.SyncState();
 
             var navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
-            if (navigationView != null) navigationView.SetNavigationItemSelectedListener(this);
+            if (navigationView != null) {
+                navigationView.SetNavigationItemSelectedListener(this);
+            }
+
+            // Check whether we're recreating a previously destroyed instance
+            if (savedInstanceState != null) {
+                // Restore value of members from saved state
+                selectedItemId = savedInstanceState.GetInt(SLECTED_ITEM_ID);
+
+                // Check and call
+                if (selectedItemId > 0) {
+                    handleItemId();
+                }
+            }
         }
 
         public override void OnBackPressed()
@@ -74,37 +90,53 @@ namespace Fragments
 
         public bool OnNavigationItemSelected(IMenuItem item)
         {
-            int id = item.ItemId;
+            // Save it
+            selectedItemId = item.ItemId;
+            handleItemId();
 
-            if (id == Resource.Id.nav_camera) {
+            var drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            if (drawer != null) drawer.CloseDrawer(GravityCompat.Start);
+            return true;
+        }
+        private void handleItemId()
+        {
+            if (selectedItemId == Resource.Id.nav_camera) {
                 // Free
-                foreach(var el in SupportFragmentManager.Fragments)
-                SupportFragmentManager
-                    .BeginTransaction()
-                    .SetReorderingAllowed(true)
-                    .Remove(el)
-                    .Commit();
-            } else if (id == Resource.Id.nav_gallery) {
+                foreach (var el in SupportFragmentManager.Fragments) {
+                    SupportFragmentManager
+                        .BeginTransaction()
+                        .SetReorderingAllowed(true)
+                        .Remove(el)
+                        .Commit();
+                }
+            } else if (selectedItemId == Resource.Id.nav_gallery) {
                 // Get fragment manager
                 SupportFragmentManager
                     .BeginTransaction()
                     .SetReorderingAllowed(true)
                     .Replace(Resource.Id.main_fragment_container_view, new GHelloWorldFragment(), null)
                     .Commit();
-            } else if (id == Resource.Id.nav_slideshow) {
+            } else if (selectedItemId == Resource.Id.nav_slideshow) {
 
-            } else if (id == Resource.Id.nav_manage) {
+            } else if (selectedItemId == Resource.Id.nav_manage) {
 
-            } else if (id == Resource.Id.nav_share) {
+            } else if (selectedItemId == Resource.Id.nav_share) {
 
-            } else if (id == Resource.Id.nav_send) {
+            } else if (selectedItemId == Resource.Id.nav_send) {
 
             }
-
-            var drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            if (drawer != null) drawer.CloseDrawer(GravityCompat.Start);
-            return true;
         }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            // Save
+            outState.PutInt(SLECTED_ITEM_ID, selectedItemId);
+
+            // call parent
+            base.OnSaveInstanceState(outState);
+        }
+
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
