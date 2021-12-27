@@ -1,5 +1,8 @@
-﻿using Android.Views;
+﻿using Android.Content;
+using Android.Views;
 using El.BL;
+using El.Helpers;
+using Fragments.Activities;
 
 namespace Fragments.Fragments
 {
@@ -43,12 +46,28 @@ namespace Fragments.Fragments
                 VM.SelectedTitle = null;
             }
 
-            // Set it 
-            var quoteFrag = new PlayQuoteFragment();
+            // Check
+            var showingTwoFragments = Resources != null
+                                        && Resources.Configuration != null
+                                        && Resources.Configuration.Orientation == Android.Content.Res.Orientation.Landscape;
 
-            var ft = ChildFragmentManager.BeginTransaction();
-            ft.Replace(Resource.Id.playquote_container_view, quoteFrag);
-            ft.Commit();
+            // Check if landscape
+            if (!showingTwoFragments) {
+                // In-activate
+                VM.IsActive = false;
+
+                // Show
+                var intent = new Intent(Activity, typeof(PlayQuoteActivity));
+                intent.PutExtra("SelectedTitle", VM.SelectedTitle.SerializeObject());
+                StartActivity(intent);
+            } else {
+                // Set it 
+                _ = ChildFragmentManager.BeginTransaction()
+                            .SetReorderingAllowed(true)
+                            .Replace(Resource.Id.play_quote_container_view, new PlayQuoteFragment())
+                            .Commit();
+            }
+
         }
     }
 }

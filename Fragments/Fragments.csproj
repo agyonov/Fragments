@@ -26,6 +26,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\app.settings.json" />
+	  <None Remove="Resources\layout\activity_play_quote.xml" />
 	  <None Remove="Resources\layout\g_hello_world_fragment.xml" />
 	</ItemGroup>
 	<ItemGroup>
@@ -36,7 +37,6 @@
 		<PackageReference Include="Xamarin.Google.Android.Material" Version="1.4.0.4" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Activities\" />
 	  <Folder Include="Properties\" />
 	</ItemGroup>
 	<ItemGroup>

@@ -23,7 +23,7 @@ namespace El.BL
             PlayQuote? res = null;
 
             // Get it
-            var ct = Messenger.Send(new GHelloWorldFragmentVM.CurrentTitleRequestMessage());
+            var ct = Messenger.Send<GHelloWorldFragmentVM.CurrentTitleRequestMessage>();
 
             // return
             if (!ct.HasReceivedResponse) {
