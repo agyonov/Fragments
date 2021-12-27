@@ -4,7 +4,7 @@
     <ActiveDebugProfile>tablet</ActiveDebugProfile>
     <DefaultDevice>tablet</DefaultDevice>
     <AndroidDesignerPreferredDevice>10.1in WXGA %28Tablet%29</AndroidDesignerPreferredDevice>
-    <AndroidDesignerPreferredTheme>Theme.AppCompat</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
     <ActiveDebugFramework>net6.0-android</ActiveDebugFramework>
   </PropertyGroup>
 </Project>

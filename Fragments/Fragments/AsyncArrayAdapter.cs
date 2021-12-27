@@ -20,14 +20,14 @@ namespace Fragments.Fragments
             _Vm.PropertyChanged += TitlesListChanged;
         }
 
-        public override long GetItemId(int position)
-        {
-            if (_Vm.Titles.Count < position) {
-                return _Vm.Titles[position].Id;
-            } else {
-                return 0;
-            }
-        }
+        //public override long GetItemId(int position)
+        //{
+        //    if (_Vm.Titles.Count < position) {
+        //        return _Vm.Titles[position].Id;
+        //    } else {
+        //        return 0;
+        //    }
+        //}
 
         /// <summary>
         /// Get some counts

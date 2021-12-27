@@ -6,7 +6,7 @@ using System.Data;
 
 namespace El
 {
-    public interface IRootVN
+    public interface IRootVN : IDisposable
     {
         BloggingContext DB { get; }
 
@@ -24,6 +24,11 @@ namespace El
         public RootVM(BloggingContext efc) : base()
         {
             _efc = efc;
+        }
+
+        public void Dispose()
+        {
+            // Nothing to do
         }
 
         #region Variables
@@ -73,6 +78,12 @@ namespace El
         public RootRecipientVM(BloggingContext efc) : base()
         {
             _efc = efc;
+            IsActive = true;
+        }
+
+        public void Dispose()
+        {
+            IsActive = false;
         }
 
         #region Variables
@@ -122,6 +133,11 @@ namespace El
         public RootValidatortVM(BloggingContext efc) : base()
         {
             _efc = efc;
+        }
+
+        public void Dispose()
+        {
+            // Nothing to do
         }
 
         #region Variables
