@@ -54,8 +54,11 @@ namespace El.BL
             set => SetProperty(ref selectedTitle, value);
         }
 
-        public async Task GetTitlesFormDbAsync()
+        public async Task GetTitlesFormDbAsync(CancellationToken ct)
         {
+            // Do some async work
+            await Task.Delay(100, ct);
+
             // Run that thing
             var titles = (from b in DB.Blog.AsNoTracking()
                           orderby b.Url
@@ -63,12 +66,12 @@ namespace El.BL
                           .Take(_Sett.Value.MaxQueueRows)
                           .ToList();
 
-            // Do some async work
-            await Task.Delay(100);
-
-            // Set that data
-            Titles = titles;
-            SelectedTitle = null;
+            //check 
+            if (!ct.IsCancellationRequested) {
+                // Set that data
+                Titles = titles;
+                SelectedTitle = null;
+            }
         }
 
         public class CurrentTitleRequestMessage : RequestMessage<Models.Title>

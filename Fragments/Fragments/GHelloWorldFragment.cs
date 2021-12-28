@@ -8,9 +8,10 @@ namespace Fragments.Fragments
 {
     public class GHelloWorldFragment : GcFragment<GHelloWorldFragmentVM>, AdapterView.IOnItemClickListener
     {
+        private readonly CancellationTokenSource _cancellationTokenSource;
         public GHelloWorldFragment() : base(Resource.Layout.g_hello_world_fragment)
         {
-
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -28,13 +29,23 @@ namespace Fragments.Fragments
             listView.OnItemClickListener = this;
         }
 
-        public override void OnStart()
+        public override void OnResume()
         {
             // call parent
-            base.OnStart();
+            base.OnResume();
 
             //Start loading
-            _ = Task.Run(async () => await VM.GetTitlesFormDbAsync());
+            var ct = _cancellationTokenSource.Token;
+            _ = Task.Run(async () => await VM.GetTitlesFormDbAsync(ct), ct);
+        }
+
+        public override void OnPause()
+        {
+            // Cancel
+            _cancellationTokenSource.Cancel();
+
+            // call parent
+            base.OnPause();
         }
 
         public void OnItemClick(AdapterView? parent, View? view, int position, long id)

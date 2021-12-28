@@ -46,8 +46,6 @@ namespace Fragments
                 // Restore value of members from saved state
                 selectedItemId = savedInstanceState.GetInt(SLECTED_ITEM_ID);
             }
-
-            
         }
 
         protected override void OnResume()
@@ -55,13 +53,19 @@ namespace Fragments
             // call parent
             base.OnResume();
 
-            // Free
-            clearItems();
-
             // Check and call
             if (selectedItemId > 0) {
                 handleItemId();
             }
+        }
+
+        protected override void OnPause()
+        {
+            // Free
+            clearItems();
+
+            // call parent
+            base.OnPause();
         }
 
         public override void OnBackPressed()
@@ -109,6 +113,8 @@ namespace Fragments
             if (drawer != null) drawer.CloseDrawer(GravityCompat.Start);
             return true;
         }
+
+
         private void handleItemId()
         {
             if (selectedItemId == Resource.Id.nav_camera) {

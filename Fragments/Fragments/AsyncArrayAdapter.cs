@@ -42,8 +42,14 @@ namespace Fragments.Fragments
 
         private void TitlesListChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            // Notify
-            MainThread.BeginInvokeOnMainThread(() => NotifyDataSetChanged());
+            switch (e.PropertyName) {
+                case "Titles":
+                    // Notify
+                    MainThread.BeginInvokeOnMainThread(() => NotifyDataSetChanged());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
