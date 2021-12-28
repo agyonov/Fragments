@@ -29,23 +29,23 @@ namespace Fragments.Fragments
             listView.OnItemClickListener = this;
         }
 
-        public override void OnResume()
+        public override void OnStart()
         {
             // call parent
-            base.OnResume();
+            base.OnStart();
 
             //Start loading
             var ct = _cancellationTokenSource.Token;
             _ = Task.Run(async () => await VM.GetTitlesFormDbAsync(ct), ct);
         }
 
-        public override void OnPause()
+        public override void OnStop()
         {
             // Cancel
             _cancellationTokenSource.Cancel();
 
             // call parent
-            base.OnPause();
+            base.OnStop();
         }
 
         public void OnItemClick(AdapterView? parent, View? view, int position, long id)

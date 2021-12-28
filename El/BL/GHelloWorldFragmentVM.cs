@@ -60,11 +60,11 @@ namespace El.BL
             await Task.Delay(100, ct);
 
             // Run that thing
-            var titles = (from b in DB.Blog.AsNoTracking()
-                          orderby b.Url
-                          select new Models.Title(b.Id, b.Url ?? string.Empty))
-                          .Take(_Sett.Value.MaxQueueRows)
-                          .ToList();
+            var titles = await (from b in DB.Blog.AsNoTracking()
+                                orderby b.Url
+                                select new Models.Title(b.Id, b.Url ?? string.Empty))
+                              .Take(_Sett.Value.MaxQueueRows)
+                              .ToListAsync(ct);
 
             //check 
             if (!ct.IsCancellationRequested) {
