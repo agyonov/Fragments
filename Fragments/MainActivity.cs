@@ -48,10 +48,10 @@ namespace Fragments
             }
         }
 
-        protected override void OnStart()
+        protected override void OnResume()
         {
             // call parent
-            base.OnStart();
+            base.OnResume();
 
             // Check and call
             if (selectedItemId > 0) {
@@ -59,13 +59,13 @@ namespace Fragments
             }
         }
 
-        protected override void OnStop()
+        protected override void OnPause()
         {
             // Free
             clearItems();
 
             // call parent
-            base.OnStop();
+            base.OnPause();
         }
 
         public override void OnBackPressed()

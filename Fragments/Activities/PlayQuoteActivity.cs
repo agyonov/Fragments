@@ -1,4 +1,5 @@
-﻿using El.BL;
+﻿using Android.Views;
+using El.BL;
 using El.Helpers;
 using Fragments.Fragments;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fragments.Activities
 {
-    [Activity(Label = "PlayQuoteActivity", Theme = "@style/AppTheme.NoActionBar")]
+    [Activity(Label = "@string/act_paly_qoute", Theme = "@style/AppTheme.NoActionBar", ParentActivity = typeof(MainActivity))]
     public class PlayQuoteActivity : GcActivity<PlayQuoteActivityVM>
     {
         public PlayQuoteActivity() : base()
@@ -22,6 +23,15 @@ namespace Fragments.Activities
             // call parent
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_play_quote);
+
+            AndroidX.AppCompat.Widget.Toolbar? myToolbar = (AndroidX.AppCompat.Widget.Toolbar?)FindViewById(Resource.Id.act_play_qoute_toolbar);
+            if (myToolbar != null) {
+                // Attach it as action bar
+                SetSupportActionBar(myToolbar);
+
+                // Set back button
+                SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            }
 
             // Get param
             var playId = Intent?.Extras?.GetString("SelectedTitle", null);
@@ -45,6 +55,18 @@ namespace Fragments.Activities
                     .SetReorderingAllowed(true)
                     .Replace(Resource.Id.play_quote_fragment_container_view, new PlayQuoteFragment(), null)
                     .Commit();
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId) {
+                case Android.Resource.Id.Home:
+                    OnBackPressed();
+                    Finish();
+                    return true;
+                default: 
+                    return base.OnOptionsItemSelected(item);
+            }
         }
 
         protected override void OnSaveInstanceState(Bundle outState)
