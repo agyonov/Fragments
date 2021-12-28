@@ -9,11 +9,15 @@ namespace El.BL
 {
     public class GHelloWorldFragmentVM : RootRecipientVM
     {
-        private readonly IOptions<AppSettings> _Sett;
+        private const string SELECTED_TITLE_LAST = "GHelloWorldFragmentVM.SELECTED_TITLE_LAST";
 
-        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett) : base(efc)
+        private readonly IOptions<AppSettings> _Sett;
+        private readonly CacheRepository _Cache;
+
+        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett, CacheRepository Cache) : base(efc)
         {
             _Sett = Sett;
+            _Cache = Cache;
         }
 
         protected override void OnActivated()
@@ -51,7 +55,17 @@ namespace El.BL
         public Models.Title? SelectedTitle
         {
             get => selectedTitle;
-            set => SetProperty(ref selectedTitle, value);
+            set {
+                // Set into cache
+                if (value != null) {
+                    _Cache.Add(SELECTED_TITLE_LAST, value);
+                } else { 
+                    _Cache.Remove(SELECTED_TITLE_LAST);
+                }
+
+                // Store it
+                _ = SetProperty(ref selectedTitle, value); 
+            }
         }
 
         public async Task GetTitlesFormDbAsync(CancellationToken ct)
@@ -66,11 +80,18 @@ namespace El.BL
                               .Take(_Sett.Value.MaxQueueRows)
                               .ToListAsync(ct);
 
+            // Get from cache
+            var cashedTitle = _Cache.Get<Models.Title>(SELECTED_TITLE_LAST);
+            if (cashedTitle != null) {
+                // Try read
+                cashedTitle = titles.FirstOrDefault(t => t.Id == cashedTitle.Id);
+            }
+
             //check 
             if (!ct.IsCancellationRequested) {
                 // Set that data
                 Titles = titles;
-                SelectedTitle = null;
+                SelectedTitle = cashedTitle;
             }
         }
 

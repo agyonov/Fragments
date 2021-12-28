@@ -48,6 +48,9 @@ namespace Fragments.Fragments
                     MainThread.BeginInvokeOnMainThread(() => { 
                         // Reload list
                         NotifyDataSetChanged();
+
+                        // Ping view
+                        _Context.TrySetSelected();
                     });
                     break;
                 default:

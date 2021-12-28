@@ -30,19 +30,16 @@ namespace Fragments.Activities
 
             // Get param
             var playId = Intent?.Extras?.GetString("SelectedTitle", null);
-            if (playId == null) {
-                // Check for saved state
-                playId = savedInstanceState?.GetString("SelectedTitle");
-
-                // Check further
-                if (playId == null) {
-                    Finish();
-                    return;
-                }
+            if (playId != null) {
+                // Send to ViewModel
+                VM.SelectedTitle = playId.DeserializeObject<El.BL.Models.Title>();
             }
 
-            // Send to ViewModel
-            VM.SelectedTitle = playId.DeserializeObject<El.BL.Models.Title>();
+            // Get me out
+            if (VM.SelectedTitle == null) {
+                    Finish();
+                    return;
+            }
 
             // Get fragment manager
             _ = SupportFragmentManager
@@ -56,21 +53,15 @@ namespace Fragments.Activities
         {
             switch (item.ItemId) {
                 case Android.Resource.Id.Home:
+                    // Set not active
+                    VM.IsActive = false;
+
+                    // Get me out of here
                     OnBackPressed();
-                    Finish();
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);
             }
-        }
-
-        protected override void OnSaveInstanceState(Bundle outState)
-        {
-            // call parent
-            base.OnSaveInstanceState(outState);
-
-            // Save selectrd
-            outState.PutString("SelectedTitle", VM.SelectedTitle.SerializeObject());
         }
     }
 }

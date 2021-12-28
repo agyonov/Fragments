@@ -111,5 +111,24 @@ namespace Fragments.Fragments
                 }
             }
         }
+
+        public void TrySetSelected()
+        {
+            // If we have value
+            if (VM.SelectedTitle != null) {
+                // Check
+                var showingTwoFragments = Resources != null
+                                            && Resources.Configuration != null
+                                            && Resources.Configuration.Orientation == Android.Content.Res.Orientation.Landscape;
+
+                // Set it 
+                if (showingTwoFragments) {
+                    _ = ChildFragmentManager.BeginTransaction()
+                            .SetReorderingAllowed(true)
+                            .Replace(Resource.Id.play_quote_container_view, new PlayQuoteFragment())
+                            .Commit();
+                }
+            }
+        }
     }
 }

@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         style="@style/Widget.MaterialComponents.Toolbar.Primary" />
 
     <androidx.fragment.app.FragmentContainerView
@@ -19,7 +21,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/play_quote_fragment_container_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/act_play_qoute_toolbar" >
     </androidx.fragment.app.FragmentContainerView>
 
 </RelativeLayout>
