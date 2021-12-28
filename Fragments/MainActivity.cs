@@ -45,11 +45,22 @@ namespace Fragments
             if (savedInstanceState != null) {
                 // Restore value of members from saved state
                 selectedItemId = savedInstanceState.GetInt(SLECTED_ITEM_ID);
+            }
 
-                // Check and call
-                if (selectedItemId > 0) {
-                    handleItemId();
-                }
+            
+        }
+
+        protected override void OnResume()
+        {
+            // call parent
+            base.OnResume();
+
+            // Free
+            clearItems();
+
+            // Check and call
+            if (selectedItemId > 0) {
+                handleItemId();
             }
         }
 
@@ -102,13 +113,7 @@ namespace Fragments
         {
             if (selectedItemId == Resource.Id.nav_camera) {
                 // Free
-                foreach (var el in SupportFragmentManager.Fragments) {
-                    SupportFragmentManager
-                        .BeginTransaction()
-                        .SetReorderingAllowed(true)
-                        .Remove(el)
-                        .Commit();
-                }
+                clearItems();
             } else if (selectedItemId == Resource.Id.nav_gallery) {
                 // Get fragment manager
                 SupportFragmentManager
@@ -124,6 +129,17 @@ namespace Fragments
 
             } else if (selectedItemId == Resource.Id.nav_send) {
 
+            }
+        }
+        private void clearItems() 
+        {
+            // Free
+            foreach (var el in SupportFragmentManager.Fragments) {
+                SupportFragmentManager
+                    .BeginTransaction()
+                    .SetReorderingAllowed(true)
+                    .Remove(el)
+                    .Commit();
             }
         }
 

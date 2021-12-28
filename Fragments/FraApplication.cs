@@ -19,5 +19,7 @@ namespace Fragments
             // Add here some init code
             Startup.Init(Assets);
         }
+
+        
     }
 }
