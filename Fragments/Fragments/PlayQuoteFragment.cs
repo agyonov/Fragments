@@ -2,11 +2,6 @@
 using Android.Util;
 using Android.Views;
 using El.BL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fragments.Fragments
 {
@@ -47,8 +42,10 @@ namespace Fragments.Fragments
             scroller.AddView(textView);
 
             // Create linear view
-            var ll = new LinearLayout(Activity);
-            ll.Orientation = Orientation.Vertical;
+            var ll = new LinearLayout(Activity)
+            {
+                Orientation = Orientation.Vertical
+            };
             ll.AddView(titleView);
             ll.AddView(scroller);
 

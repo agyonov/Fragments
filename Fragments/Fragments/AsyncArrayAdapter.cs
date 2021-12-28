@@ -8,9 +8,9 @@ namespace Fragments.Fragments
     public class AsyncArrayAdapter : ArrayAdapter<Title>
     {
         private readonly GHelloWorldFragmentVM _Vm;
-        private readonly AndroidX.Fragment.App.Fragment _Context;
+        private readonly GHelloWorldFragment _Context;
 
-        public AsyncArrayAdapter(AndroidX.Fragment.App.Fragment Context, int Resource, GHelloWorldFragmentVM Vm) : base(Context.Context, Resource)
+        public AsyncArrayAdapter(GHelloWorldFragment Context, int Resource, GHelloWorldFragmentVM Vm) : base(Context.Context, Resource)
         {
             // Store for usage
             _Vm = Vm;
@@ -45,7 +45,10 @@ namespace Fragments.Fragments
             switch (e.PropertyName) {
                 case "Titles":
                     // Notify
-                    MainThread.BeginInvokeOnMainThread(() => NotifyDataSetChanged());
+                    MainThread.BeginInvokeOnMainThread(() => { 
+                        // Reload list
+                        NotifyDataSetChanged();
+                    });
                     break;
                 default:
                     break;

@@ -23,6 +23,11 @@ namespace Fragments
 
         }
 
+        public GcActivity(int ContentLayOutId) : base(ContentLayOutId)
+        {
+
+        }
+
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             // call parent
@@ -35,33 +40,24 @@ namespace Fragments
             _VM = ServiceProvider.GetRequiredService<T>();
         }
 
-        public GcActivity(int ContentLayOutId) : base(ContentLayOutId)
-        {
-            // Start new scope
-            scope = Startup.ServiceProvider.CreateScope();
-
-            // Create ViewModel
-            _VM = ServiceProvider.GetRequiredService<T>();
-        }
-
         protected override void OnDestroy()
         {
-            // Call parent
-            base.OnDestroy();
-
             // Free
             scope.Dispose();
+
+            // Call parent
+            base.OnDestroy();
         }
 
         protected override void Dispose(bool disposing)
         {
-            // call parent
-            base.Dispose(disposing);
-
             try {
                 // further dispose
                 scope.Dispose();
             } catch { }
+
+            // call parent
+            base.Dispose(disposing);
         }
     }
 }

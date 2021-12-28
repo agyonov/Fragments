@@ -48,7 +48,7 @@ namespace Fragments
             }
         }
 
-        protected override void OnResume()
+        protected override void OnStart()
         {
             // call parent
             base.OnResume();
@@ -59,7 +59,7 @@ namespace Fragments
             }
         }
 
-        protected override void OnPause()
+        protected override void OnStop()
         {
             // Free
             clearItems();
@@ -137,7 +137,7 @@ namespace Fragments
 
             }
         }
-        private void clearItems() 
+        private void clearItems()
         {
             // Free
             foreach (var el in SupportFragmentManager.Fragments) {

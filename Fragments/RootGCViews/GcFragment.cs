@@ -43,22 +43,22 @@ namespace Fragments
 
         public override void OnDestroy()
         {
-            // call parent
-            base.OnDestroy();
-
             // further dispose
             scope.Dispose();
+
+            // call parent
+            base.OnDestroy();
         }
 
         protected override void Dispose(bool disposing)
         {
-            // call parent
-            base.Dispose(disposing);
-
             try {
                 // further dispose
                 scope.Dispose();
             } catch { }
+
+            // call parent
+            base.Dispose(disposing);
         }
     }
 }

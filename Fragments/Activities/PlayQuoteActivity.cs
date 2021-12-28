@@ -2,11 +2,6 @@
 using El.BL;
 using El.Helpers;
 using Fragments.Fragments;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fragments.Activities
 {
@@ -64,7 +59,7 @@ namespace Fragments.Activities
                     OnBackPressed();
                     Finish();
                     return true;
-                default: 
+                default:
                     return base.OnOptionsItemSelected(item);
             }
         }

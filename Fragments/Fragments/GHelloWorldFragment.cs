@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Views;
 using El.BL;
+using El.BL.Models;
 using El.Helpers;
 using Fragments.Activities;
 
@@ -8,10 +9,23 @@ namespace Fragments.Fragments
 {
     public class GHelloWorldFragment : GcFragment<GHelloWorldFragmentVM>, AdapterView.IOnItemClickListener
     {
+
         private readonly CancellationTokenSource _cancellationTokenSource;
+
         public GHelloWorldFragment() : base(Resource.Layout.g_hello_world_fragment)
         {
             _cancellationTokenSource = new CancellationTokenSource();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            // If managed
+            if (disposing) {
+                _cancellationTokenSource.Dispose();
+            }
+
+            // call parent
+            base.Dispose(disposing);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -33,6 +47,9 @@ namespace Fragments.Fragments
         {
             // call parent
             base.OnStart();
+
+            // Re-set ancelation token
+            _cancellationTokenSource.TryReset();
 
             //Start loading
             var ct = _cancellationTokenSource.Token;
@@ -62,23 +79,37 @@ namespace Fragments.Fragments
                                         && Resources.Configuration != null
                                         && Resources.Configuration.Orientation == Android.Content.Res.Orientation.Landscape;
 
-            // Check if landscape
-            if (!showingTwoFragments) {
-                // In-activate
-                VM.IsActive = false;
+            // Check for selection
+            if (VM.SelectedTitle != null) {
+                // Check if landscape
+                if (!showingTwoFragments) {
+                    // In-activate
+                    VM.IsActive = false;
 
-                // Show
-                var intent = new Intent(Activity, typeof(PlayQuoteActivity));
-                intent.PutExtra("SelectedTitle", VM.SelectedTitle.SerializeObject());
-                StartActivity(intent);
+                    // Show
+                    var intent = new Intent(Activity, typeof(PlayQuoteActivity));
+                    intent.PutExtra("SelectedTitle", VM.SelectedTitle.SerializeObject());
+                    StartActivity(intent);
+                } else {
+                    // Set it 
+                    _ = ChildFragmentManager.BeginTransaction()
+                                .SetReorderingAllowed(true)
+                                .Replace(Resource.Id.play_quote_container_view, new PlayQuoteFragment())
+                                .Commit();
+                }
             } else {
-                // Set it 
-                _ = ChildFragmentManager.BeginTransaction()
+                // Check if landscape
+                if (showingTwoFragments) {
+                    // Free
+                    foreach (var el in ChildFragmentManager.Fragments) {
+                        ChildFragmentManager
+                            .BeginTransaction()
                             .SetReorderingAllowed(true)
-                            .Replace(Resource.Id.play_quote_container_view, new PlayQuoteFragment())
+                            .Remove(el)
                             .Commit();
+                    }
+                }
             }
-
         }
     }
 }

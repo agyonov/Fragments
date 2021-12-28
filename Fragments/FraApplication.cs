@@ -20,6 +20,6 @@ namespace Fragments
             Startup.Init(Assets);
         }
 
-        
+
     }
 }

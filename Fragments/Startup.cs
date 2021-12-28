@@ -57,10 +57,10 @@ namespace Fragments
 
             // Set min threads
             using (var scope = ServiceProvider.CreateScope()) {
-                var appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>(); 
+                var appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>();
                 ThreadPool.SetMinThreads(appSettings.Value.MinThreads, appSettings.Value.MinIOThreads);
             }
-            
+
             // Migrate
             using (var scope = ServiceProvider.CreateScope())
             using (var db = scope.ServiceProvider.GetRequiredService<BloggingContext>()) {
