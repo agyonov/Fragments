@@ -1,5 +1,8 @@
 ﻿using Android.Runtime;
+using Android.Views;
+using Google.Android.Material.Snackbar;
 using Serilog;
+using Xamarin.Essentials;
 
 namespace Fragments
 {
@@ -43,12 +46,40 @@ namespace Fragments
 
             // Try to recover
             e.Handled = true;
+
+            // Get current activity
+            var view = Platform.CurrentActivity.Window?.DecorView;
+            if (view != null) {
+                // Show
+                var snak = Snackbar.Make(view,
+                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\n\r\nПодробности за грешката се записват в журнала на приложението.", 
+                    Snackbar.LengthIndefinite);
+                var snackBarView = snak.View;
+                var textView = (TextView?)snackBarView.FindViewById(Resource.Id.snackbar_text);
+                textView?.SetMaxLines(5);
+                snak.SetAction("Ok", (v) => { snak.Dismiss(); });
+                snak.Show();
+            }
         }
 
         private static void TaskSchedulerOnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
         {
             // Log it
             LogUnhandledException(unobservedTaskExceptionEventArgs.Exception, "UnobservedTaskException");
+
+            // Get current activity
+            var view = Platform.CurrentActivity.Window?.DecorView;
+            if (view != null) {
+                // Show
+                var snak = Snackbar.Make(view,
+                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\n\r\nПодробности за грешката се записват в журнала на приложението.",
+                    Snackbar.LengthIndefinite);
+                var snackBarView = snak.View;
+                var textView = (TextView?)snackBarView.FindViewById(Resource.Id.snackbar_text);
+                textView?.SetMaxLines(5);
+                snak.SetAction("Ok", (v) => { snak.Dismiss(); });
+                snak.Show();
+            }
         }
 
         private static void CurrentDomainOnUnhandledException(object? sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
