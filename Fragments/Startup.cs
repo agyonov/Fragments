@@ -16,30 +16,51 @@ namespace Fragments
     {
         // Store some general
         private static IHost bHost = default!;
-        public static IServiceProvider ServiceProvider => bHost.Services;
+        internal static IServiceProvider ServiceProvider => bHost.Services;
 
-        public static void Init(AssetManager? asset, string? docsPath)
+        internal static bool Init(AssetManager? asset, string? docsPath)
         {
+            // Set some base path
+            var folder = Environment.SpecialFolder.Personal;
+            var path = Environment.GetFolderPath(folder);
+
+            // Check if in debug
             bool isDebugMode = false;
-            #if DEBUG
-                isDebugMode = true;
-            #endif
+#if DEBUG
+            isDebugMode = true;
+#endif
+            
+            // Create generic host
+            var host = new HostBuilder();
+
+            // Create logger
+            if (isDebugMode) {
+                Log.Logger = new LoggerConfiguration()
+                        .MinimumLevel.Debug()
+                        .Enrich.FromLogContext()
+                        .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app_.txt"),
+                                        rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 6291456,
+                                        retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
+                        .CreateLogger();
+            } else {
+                Log.Logger = new LoggerConfiguration()
+                        .MinimumLevel.Warning()
+                        .Enrich.FromLogContext()
+                        .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app_.txt"),
+                                        rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 6291456,
+                                        retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
+                        .CreateLogger();
+            }
+            host.UseSerilog();
+
+            // Set sillly thing here
+            host.ConfigureHostConfiguration(con =>
+            {
+                con.AddCommandLine(new string[] { $"ContentRoot={path}" });
+            });
 
             // Check if correct
             if (asset != null) {
-                // Create generic host
-                var host = new HostBuilder();
-
-                // Set some base path
-                var folder = Environment.SpecialFolder.Personal;
-                var path = Environment.GetFolderPath(folder);
-
-                // Set sillly thing here
-                host.ConfigureHostConfiguration(con =>
-                {
-                    con.AddCommandLine(new string[] { $"ContentRoot={path}" });
-                });
-
                 // Add app some configuration from JSON data
                 using (var setStream = asset.Open("app.settings.json")) {
                     host.ConfigureAppConfiguration(con =>
@@ -55,44 +76,33 @@ namespace Fragments
                         hostingContext.ConfigureContainer(services);
                     });
 
-
-                    // Create logger
-                    if (isDebugMode) {
-                        Log.Logger = new LoggerConfiguration()
-                                .MinimumLevel.Debug()
-                                .Enrich.FromLogContext()
-                                .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app.txt"),
-                                                rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 6291456,
-                                                retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
-                                .CreateLogger();
-                    } else {
-                        Log.Logger = new LoggerConfiguration()
-                                .MinimumLevel.Warning()
-                                .Enrich.FromLogContext()
-                                .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app.txt"),
-                                                rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 6291456,
-                                                retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
-                                .CreateLogger();
-                    }
-                    host.UseSerilog();
-
                     // Build it
                     bHost = host.Build();
                 }
+
+                // Set min threads
+                using (var scope = ServiceProvider.CreateScope()) {
+                    var appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>();
+                    ThreadPool.SetMinThreads(appSettings.Value.MinThreads, appSettings.Value.MinIOThreads);
+                }
+
+                // Migrate
+                using (var scope = ServiceProvider.CreateScope())
+                using (var db = scope.ServiceProvider.GetRequiredService<BloggingContext>()) {
+                    db.Database.Migrate();
+                }
+
+                //return 
+                return true;
             } else {
-                throw new Exception("AssetManager is requiered. It must be not null object reference!");
-            }
+                // Build it
+                bHost = host.Build();
 
-            // Set min threads
-            using (var scope = ServiceProvider.CreateScope()) {
-                var appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>();
-                ThreadPool.SetMinThreads(appSettings.Value.MinThreads, appSettings.Value.MinIOThreads);
-            }
+                // Get me out of here
+                Log.Fatal("AssetManager is requiered. It must be not null object reference!");
 
-            // Migrate
-            using (var scope = ServiceProvider.CreateScope())
-            using (var db = scope.ServiceProvider.GetRequiredService<BloggingContext>()) {
-                db.Database.Migrate();
+                //return 
+                return false;
             }
         }
 
@@ -101,7 +111,7 @@ namespace Fragments
         /// </summary>
         /// <param name="hostingContext">The hosting context</param>
         /// <param name="services">The service collection</param>
-        public static void ConfigureContainer(this HostBuilderContext hostingContext, IServiceCollection services)
+        private static void ConfigureContainer(this HostBuilderContext hostingContext, IServiceCollection services)
         {
             // Get some folders
             var folder = Environment.SpecialFolder.Personal;

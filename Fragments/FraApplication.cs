@@ -29,7 +29,9 @@ namespace Fragments
             AndroidEnvironment.UnhandledExceptionRaiser += UnhandledExceptionRaiser;
 
             // Add here some init code
-            Startup.Init(Assets, DocumentsPath);
+            if (!Startup.Init(Assets, DocumentsPath)) {
+                Java.Lang.JavaSystem.Exit(0); // Terminate JVM
+            }
         }
 
         #region Exception handling
@@ -65,7 +67,7 @@ namespace Fragments
                     Log.Error("Message: {0}.\r\n{1}", message, exception?.ToString());
                 }
             } catch {
-                // just suppress any error logging exceptions
+                // I do not care
             }
         }
 
