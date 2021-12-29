@@ -24,6 +24,21 @@
 		<AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
 		<AndroidTlsProvider>btls</AndroidTlsProvider>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
+	  <TrimMode>copyused</TrimMode>
+	  <AndroidHttpClientHandlerType>System.Net.Http.HttpClientHandler</AndroidHttpClientHandlerType>
+	  <AndroidTlsProvider>btls</AndroidTlsProvider>
+	  <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
+	  <AndroidLinkTool>r8</AndroidLinkTool>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
+	  <TrimMode>copyused</TrimMode>
+	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <AndroidHttpClientHandlerType>System.Net.Http.HttpClientHandler</AndroidHttpClientHandlerType>
+	  <AndroidTlsProvider>btls</AndroidTlsProvider>
+	  <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
+	  <AndroidLinkTool>r8</AndroidLinkTool>
+	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\app.settings.json" />
 	  <None Remove="Resources\layout\activity_play_quote.xml" />
