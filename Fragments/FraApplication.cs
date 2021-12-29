@@ -16,10 +16,11 @@ namespace Fragments
             // Call parent
             base.OnCreate();
 
+            // Get path
+            var DocumentsPath = BaseContext?.GetExternalFilesDir("DirectoryDocuments")?.AbsolutePath;
+
             // Add here some init code
-            Startup.Init(Assets);
+            Startup.Init(Assets, DocumentsPath);
         }
-
-
     }
 }

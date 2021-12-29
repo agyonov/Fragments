@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Serilog;
+using Serilog.Events;
 
 namespace Fragments
 {
@@ -16,7 +18,7 @@ namespace Fragments
         private static IHost bHost = default!;
         public static IServiceProvider ServiceProvider => bHost.Services;
 
-        public static void Init(AssetManager? asset)
+        public static void Init(AssetManager? asset, string? docsPath)
         {
             // Check if correct
             if (asset != null) {
@@ -42,11 +44,19 @@ namespace Fragments
                     .ConfigureServices((hostingContext, services) =>
                     {
                         // Register the IConfiguration instance for General application settings.
-                        services.Configure<El.Models.AppSettings>(hostingContext.Configuration.GetSection("AppSettings"));
+                        services.Configure<AppSettings>(hostingContext.Configuration.GetSection("AppSettings"));
 
                         // Configure my service
                         hostingContext.ConfigureContainer(services);
                     });
+
+                    // Create logger
+                    Log.Logger = new LoggerConfiguration()
+                            .MinimumLevel.Information()
+                            .Enrich.FromLogContext()
+                            .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app.txt"), rollingInterval: RollingInterval.Day, retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
+                            .CreateLogger();
+                    host.UseSerilog();
 
                     // Build it
                     bHost = host.Build();
@@ -87,8 +97,8 @@ namespace Fragments
             });
 
             // Add library configuration - Library
-            var appCfg = hostingContext.Configuration.GetSection("AppSettings").Get<El.Models.AppSettings>();
-            services.AddElLibrary(new El.Models.LibraryConfig
+            var appCfg = hostingContext.Configuration.GetSection("AppSettings").Get<AppSettings>();
+            services.AddElLibrary(new LibraryConfig
             {
                 BasePath = Environment.GetFolderPath(folder),
                 DataBasePath = Environment.GetFolderPath(folder),

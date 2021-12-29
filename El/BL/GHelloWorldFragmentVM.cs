@@ -1,6 +1,7 @@
 ﻿using Db;
 using El.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Mvvm.Messaging.Messages;
@@ -13,11 +14,14 @@ namespace El.BL
 
         private readonly IOptions<AppSettings> _Sett;
         private readonly CacheRepository _Cache;
+        private readonly ILogger _Logger;
 
-        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett, CacheRepository Cache) : base(efc)
+        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett, 
+            CacheRepository Cache, ILogger<GHelloWorldFragmentVM> Logger) : base(efc)
         {
             _Sett = Sett;
             _Cache = Cache;
+            _Logger = Logger;
         }
 
         protected override void OnActivated()
@@ -93,6 +97,9 @@ namespace El.BL
                 Titles = titles;
                 SelectedTitle = cashedTitle;
             }
+
+            // Log
+            _Logger.LogInformation("Received {0} titles from DB.", titles.Count);
         }
 
         public class CurrentTitleRequestMessage : RequestMessage<Models.Title>
