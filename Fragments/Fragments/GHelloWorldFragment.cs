@@ -54,6 +54,8 @@ namespace Fragments.Fragments
             //Start loading
             var ct = _cancellationTokenSource.Token;
             _ = Task.Run(async () => await VM.GetTitlesFormDbAsync(ct), ct);
+
+            throw new Exception("Test exception");
         }
 
         public override void OnStop()

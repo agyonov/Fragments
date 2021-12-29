@@ -20,6 +20,11 @@ namespace Fragments
 
         public static void Init(AssetManager? asset, string? docsPath)
         {
+            bool isDebugMode = false;
+            #if DEBUG
+                isDebugMode = true;
+            #endif
+
             // Check if correct
             if (asset != null) {
                 // Create generic host
@@ -50,12 +55,25 @@ namespace Fragments
                         hostingContext.ConfigureContainer(services);
                     });
 
+
                     // Create logger
-                    Log.Logger = new LoggerConfiguration()
-                            .MinimumLevel.Information()
-                            .Enrich.FromLogContext()
-                            .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app.txt"), rollingInterval: RollingInterval.Day, retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
-                            .CreateLogger();
+                    if (isDebugMode) {
+                        Log.Logger = new LoggerConfiguration()
+                                .MinimumLevel.Debug()
+                                .Enrich.FromLogContext()
+                                .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app.txt"),
+                                                rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 6291456,
+                                                retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
+                                .CreateLogger();
+                    } else {
+                        Log.Logger = new LoggerConfiguration()
+                                .MinimumLevel.Warning()
+                                .Enrich.FromLogContext()
+                                .WriteTo.File(Path.Join(string.IsNullOrWhiteSpace(docsPath) ? path : docsPath, "log_app.txt"),
+                                                rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 6291456,
+                                                retainedFileCountLimit: 5, retainedFileTimeLimit: TimeSpan.FromDays(5))
+                                .CreateLogger();
+                    }
                     host.UseSerilog();
 
                     // Build it
