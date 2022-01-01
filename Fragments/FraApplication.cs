@@ -20,7 +20,7 @@ namespace Fragments
             base.OnCreate();
 
             // Init
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 // Get path
                 string? DocumentsPath = null;
@@ -55,11 +55,12 @@ namespace Fragments
             if (view != null) {
                 // Show
                 var snak = Snackbar.Make(view,
-                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\n\r\nПодробности за грешката се записват в журнала на приложението.",
+                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\nПодробности за грешката се записват в журнала на приложението.",
                     Snackbar.LengthIndefinite);
                 var snackBarView = snak.View;
                 var textView = (TextView?)snackBarView.FindViewById(Resource.Id.snackbar_text);
                 textView?.SetMaxLines(5);
+                textView?.SetTextAppearance(Resource.Style.GenErrorSnack);
                 snak.SetAction("Ok", (v) => { snak.Dismiss(); });
                 snak.Show();
             }
@@ -75,11 +76,12 @@ namespace Fragments
             if (view != null) {
                 // Show
                 var snak = Snackbar.Make(view,
-                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\n\r\nПодробности за грешката се записват в журнала на приложението.",
+                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\nПодробности за грешката се записват в журнала на приложението.",
                     Snackbar.LengthIndefinite);
                 var snackBarView = snak.View;
                 var textView = (TextView?)snackBarView.FindViewById(Resource.Id.snackbar_text);
                 textView?.SetMaxLines(5);
+                textView?.SetTextAppearance(Resource.Style.GenErrorSnack);
                 snak.SetAction("Ok", (v) => { snak.Dismiss(); });
                 snak.Show();
             }

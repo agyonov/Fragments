@@ -7,45 +7,21 @@ using Fragments.Fragments;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
-using Xamarin.Essentials;
 
 namespace Fragments
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private const string SLECTED_ITEM_ID = "SLECTED_ITEM_ID";
         private int selectedItemId = 0;
-        private WaitDialog waitDlg = default!;
 
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             // Call Parent
             base.OnCreate(savedInstanceState);
 
-            // Init Xamarin Essentials
-            Platform.Init(this, savedInstanceState);
-
-            // Show wait
-            waitDlg = new WaitDialog();
-            waitDlg.Show(SupportFragmentManager, "wait");
-            Task.Run(async () =>
-            {
-                // Cycle
-                while (!Startup.IsInited) {
-                    await Task.Delay(250);
-                }
-
-                // Notify
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    // Close it
-                    waitDlg.Dismiss();
-                });
-            });
-
-            
-
+            // Set main view
             SetContentView(Resource.Layout.activity_main);
             var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
@@ -73,7 +49,7 @@ namespace Fragments
         protected override void OnStart()
         {
             // call parent
-            base.OnResume();
+            base.OnStart();
 
             // Check and call
             if (selectedItemId > 0) {
@@ -87,7 +63,7 @@ namespace Fragments
             clearItems();
 
             // call parent
-            base.OnPause();
+            base.OnStop();
         }
 
         public override void OnBackPressed()
