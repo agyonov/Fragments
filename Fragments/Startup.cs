@@ -17,6 +17,8 @@ namespace Fragments
         // Store some general
         private static IHost bHost = default!;
         internal static IServiceProvider ServiceProvider => bHost.Services;
+        private static bool _isInited = false;
+        internal static bool IsInited => _isInited;
 
         internal static bool Init(AssetManager? asset, string? docsPath)
         {
@@ -93,7 +95,8 @@ namespace Fragments
                 }
 
                 //return 
-                return true;
+                _isInited = true;
+                return _isInited;
             } else {
                 // Build it
                 bHost = host.Build();
@@ -102,7 +105,7 @@ namespace Fragments
                 Log.Fatal("AssetManager is requiered. It must be not null object reference!");
 
                 //return 
-                return false;
+                return _isInited;
             }
         }
 

@@ -15,11 +15,25 @@ namespace Fragments
     {
         private const string SLECTED_ITEM_ID = "SLECTED_ITEM_ID";
         private int selectedItemId = 0;
+        private WaitDialog waitDlg = default!;
 
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             // Call Parent
             base.OnCreate(savedInstanceState);
+
+            // Show wait
+            waitDlg = new WaitDialog();
+            waitDlg.Show(SupportFragmentManager, "wait");
+            Task.Run(async () => {
+                // Cycle
+                while (!Startup.IsInited) {
+                    await Task.Delay(250);
+                }
+
+                // Close it
+                waitDlg.Dismiss();
+            });
 
             // Init Xamarin Essentials
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

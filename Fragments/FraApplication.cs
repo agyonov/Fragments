@@ -1,5 +1,4 @@
 ﻿using Android.Runtime;
-using Android.Views;
 using Google.Android.Material.Snackbar;
 using Serilog;
 using Xamarin.Essentials;
@@ -20,21 +19,25 @@ namespace Fragments
             // Call parent
             base.OnCreate();
 
-            // Get path
-            string? DocumentsPath = null;
-            if (Android.OS.Environment.MediaMounted.Equals(Android.OS.Environment.ExternalStorageState)) {
-                DocumentsPath = BaseContext?.GetExternalFilesDir("DirectoryDocuments")?.AbsolutePath;
-            }
+            // Init
+            Task.Run(() =>
+            {
+                // Get path
+                string? DocumentsPath = null;
+                if (Android.OS.Environment.MediaMounted.Equals(Android.OS.Environment.ExternalStorageState)) {
+                    DocumentsPath = BaseContext?.GetExternalFilesDir("DirectoryDocuments")?.AbsolutePath;
+                }
 
-            // Attach global exception handlers
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-            TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
-            AndroidEnvironment.UnhandledExceptionRaiser += UnhandledExceptionRaiser;
+                // Attach global exception handlers
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+                TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
+                AndroidEnvironment.UnhandledExceptionRaiser += UnhandledExceptionRaiser;
 
-            // Add here some init code
-            if (!Startup.Init(Assets, DocumentsPath)) {
-                Java.Lang.JavaSystem.Exit(0); // Terminate JVM
-            }
+                // Add here some init code
+                if (!Startup.Init(Assets, DocumentsPath)) {
+                    Java.Lang.JavaSystem.Exit(0); // Terminate JVM
+                }
+            });
         }
 
         #region Exception handling
@@ -52,7 +55,7 @@ namespace Fragments
             if (view != null) {
                 // Show
                 var snak = Snackbar.Make(view,
-                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\n\r\nПодробности за грешката се записват в журнала на приложението.", 
+                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\n\r\nПодробности за грешката се записват в журнала на приложението.",
                     Snackbar.LengthIndefinite);
                 var snackBarView = snak.View;
                 var textView = (TextView?)snackBarView.FindViewById(Resource.Id.snackbar_text);
