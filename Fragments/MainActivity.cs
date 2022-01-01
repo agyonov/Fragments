@@ -7,6 +7,7 @@ using Fragments.Fragments;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
+using Xamarin.Essentials;
 
 namespace Fragments
 {
@@ -22,21 +23,28 @@ namespace Fragments
             // Call Parent
             base.OnCreate(savedInstanceState);
 
+            // Init Xamarin Essentials
+            Platform.Init(this, savedInstanceState);
+
             // Show wait
             waitDlg = new WaitDialog();
             waitDlg.Show(SupportFragmentManager, "wait");
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 // Cycle
                 while (!Startup.IsInited) {
                     await Task.Delay(250);
                 }
 
-                // Close it
-                waitDlg.Dismiss();
+                // Notify
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    // Close it
+                    waitDlg.Dismiss();
+                });
             });
 
-            // Init Xamarin Essentials
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            
 
             SetContentView(Resource.Layout.activity_main);
             var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);

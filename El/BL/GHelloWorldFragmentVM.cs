@@ -16,7 +16,7 @@ namespace El.BL
         private readonly CacheRepository _Cache;
         private readonly ILogger _Logger;
 
-        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett, 
+        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett,
             CacheRepository Cache, ILogger<GHelloWorldFragmentVM> Logger) : base(efc)
         {
             _Sett = Sett;
@@ -59,16 +59,17 @@ namespace El.BL
         public Models.Title? SelectedTitle
         {
             get => selectedTitle;
-            set {
+            set
+            {
                 // Set into cache
                 if (value != null) {
                     _Cache.Add(SELECTED_TITLE_LAST, value);
-                } else { 
+                } else {
                     _Cache.Remove(SELECTED_TITLE_LAST);
                 }
 
                 // Store it
-                _ = SetProperty(ref selectedTitle, value); 
+                _ = SetProperty(ref selectedTitle, value);
             }
         }
 

@@ -1,7 +1,6 @@
 ﻿using Android.Content;
 using Android.Views;
 using El.BL;
-using El.BL.Models;
 using El.Helpers;
 using Fragments.Activities;
 

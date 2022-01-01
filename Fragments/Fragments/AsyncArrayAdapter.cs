@@ -45,7 +45,8 @@ namespace Fragments.Fragments
             switch (e.PropertyName) {
                 case "Titles":
                     // Notify
-                    MainThread.BeginInvokeOnMainThread(() => { 
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
                         // Reload list
                         NotifyDataSetChanged();
 

@@ -37,8 +37,8 @@ namespace Fragments.Activities
 
             // Get me out
             if (VM.SelectedTitle == null) {
-                    Finish();
-                    return;
+                Finish();
+                return;
             }
 
             // Get fragment manager

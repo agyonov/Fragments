@@ -45,7 +45,8 @@ namespace El.BL
         public Models.Title? SelectedTitle
         {
             get => selectedTitle;
-            set {
+            set
+            {
                 // Set into cache
                 if (value != null) {
                     _Cache.Add(SELECTED_TITLE_LAST, value);

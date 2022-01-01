@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Serilog;
-using Serilog.Events;
 
 namespace Fragments
 {
@@ -31,7 +30,7 @@ namespace Fragments
 #if DEBUG
             isDebugMode = true;
 #endif
-            
+
             // Create generic host
             var host = new HostBuilder();
 
