@@ -33,20 +33,20 @@ namespace El
                     builder.TryAddScoped(c);
                 } else if (c.IsAssignableTo(typeof(IRootVN))) {
                     builder.TryAddScoped(c);
-                } else if (c.Namespace != null && c.Namespace.StartsWith("GConsMcbLibrary.Nomens")) {
+                } else if (c.Namespace != null && c.Namespace.StartsWith("El.Nomens")) {
+                    builder.TryAddTransient(c);
+                } else if (c.Namespace != null && c.Namespace.StartsWith("El.BL")) {
                     builder.TryAddTransient(c);
                 }
-                //} else if (c.Namespace != null && c.Namespace.StartsWith("Library.BL.Validators")) {
-                //    builder.AddTransient(c);
-                //} else if (c.Namespace != null && c.Namespace.StartsWith("Library.BL.Builders")) {
+                //}  else if (c.Namespace != null && c.Namespace.StartsWith("Library.BL.Builders")) {
                 //    builder.AddTransient(c);
                 //} 
             }
 
             // Register utilities
             builder.Add(new ServiceDescriptor(
-                    typeof(Lazy<>), typeof(LazyImpl<>), ServiceLifetime.Transient
-                ));
+                typeof(Lazy<>), typeof(LazyImpl<>), ServiceLifetime.Transient
+            ));
         }
 
         // Store

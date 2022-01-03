@@ -133,7 +133,12 @@ namespace Fragments
                     .Replace(Resource.Id.main_fragment_container_view, new ExceptionFragment(), null)
                     .Commit();
             } else if (selectedItemId == Resource.Id.nav_manage) {
-
+                // Get fragment manager
+                SupportFragmentManager
+                    .BeginTransaction()
+                    .SetReorderingAllowed(true)
+                    .Replace(Resource.Id.main_fragment_container_view, new BitcoinRates(), null)
+                    .Commit();
             } else if (selectedItemId == Resource.Id.nav_share) {
 
             } else if (selectedItemId == Resource.Id.nav_send) {
