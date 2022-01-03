@@ -126,7 +126,12 @@ namespace Fragments
                     .Replace(Resource.Id.main_fragment_container_view, new PlayListFragment(), null)
                     .Commit();
             } else if (selectedItemId == Resource.Id.nav_slideshow) {
-
+                // Get fragment manager
+                SupportFragmentManager
+                    .BeginTransaction()
+                    .SetReorderingAllowed(true)
+                    .Replace(Resource.Id.main_fragment_container_view, new ExceptionFragment(), null)
+                    .Commit();
             } else if (selectedItemId == Resource.Id.nav_manage) {
 
             } else if (selectedItemId == Resource.Id.nav_share) {

@@ -75,9 +75,6 @@ namespace El.BL
 
         public async Task GetTitlesFormDbAsync(CancellationToken ct)
         {
-            // Do some async work
-            await Task.Delay(100, ct);
-
             // Run that thing
             var titles = await (from b in DB.Blog.AsNoTracking()
                                 orderby b.Url
