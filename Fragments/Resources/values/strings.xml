@@ -8,4 +8,6 @@
 	<string name="system_error_text">Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\nПодробности за грешката се записват в журнала на приложението.</string>
 	<string name="ok_button_text">ОК</string>
 	<string name="please_wait_text">Моля, изчакайте...</string>
+	<string name="bitcoin_text_value_title">Биткойн курсове</string>
+	<string name="bitcoin_text_value_date">Към дата/час:</string>
 </resources>

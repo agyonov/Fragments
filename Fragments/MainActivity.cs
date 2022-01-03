@@ -137,7 +137,7 @@ namespace Fragments
                 SupportFragmentManager
                     .BeginTransaction()
                     .SetReorderingAllowed(true)
-                    .Replace(Resource.Id.main_fragment_container_view, new BitcoinRates(), null)
+                    .Replace(Resource.Id.main_fragment_container_view, new BitcoinRatesFragment(), null)
                     .Commit();
             } else if (selectedItemId == Resource.Id.nav_share) {
 

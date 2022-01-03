@@ -44,6 +44,8 @@
 	  <None Remove="Assets\app.settings.json" />
 	  <None Remove="Resources\drawable\splash_screen.xml" />
 	  <None Remove="Resources\layout\activity_play_quote.xml" />
+	  <None Remove="Resources\layout\fragment_bitcoin.xml" />
+	  <None Remove="Resources\layout\fragment_bitcoin_item.xml" />
 	  <None Remove="Resources\layout\g_hello_world_fragment.xml" />
 	</ItemGroup>
 	<ItemGroup>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bitcoin_relative_main"
+>
+    <TextView
+        android:text="@string/bitcoin_text_value_title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:id="@+id/bitcoin_text_title"/>
+    <TextView
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bitcoin_text_date"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_below="@id/bitcoin_text_title"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:id="@+id/bitcoin_recycle_view_rates"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_below="@id/bitcoin_text_date"
+        android:layout_height="match_parent"
+        />
+
+</RelativeLayout>
