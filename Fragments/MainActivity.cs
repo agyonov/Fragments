@@ -123,7 +123,7 @@ namespace Fragments
                 SupportFragmentManager
                     .BeginTransaction()
                     .SetReorderingAllowed(true)
-                    .Replace(Resource.Id.main_fragment_container_view, new GHelloWorldFragment(), null)
+                    .Replace(Resource.Id.main_fragment_container_view, new PlayListFragment(), null)
                     .Commit();
             } else if (selectedItemId == Resource.Id.nav_slideshow) {
 

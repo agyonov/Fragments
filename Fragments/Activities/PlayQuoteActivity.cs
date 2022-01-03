@@ -8,6 +8,8 @@ namespace Fragments.Activities
     [Activity(Label = "@string/act_paly_qoute", Theme = "@style/AppTheme.NoActionBar", ParentActivity = typeof(MainActivity))]
     public class PlayQuoteActivity : GcActivity<PlayQuoteActivityVM>
     {
+        internal const string SELECTED_TITLE_INTENT = "SELECTED_TITLE_INTENT";
+
         public PlayQuoteActivity() : base()
         {
 
@@ -29,7 +31,7 @@ namespace Fragments.Activities
             }
 
             // Get param
-            var playId = Intent?.Extras?.GetString("SelectedTitle", null);
+            var playId = Intent?.Extras?.GetString(SELECTED_TITLE_INTENT, null);
             if (playId != null) {
                 // Send to ViewModel
                 VM.SelectedTitle = playId.DeserializeObject<El.BL.Models.Title>();

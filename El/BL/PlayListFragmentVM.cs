@@ -8,7 +8,7 @@ using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 
 namespace El.BL
 {
-    public class GHelloWorldFragmentVM : RootRecipientVM
+    public class PlayListFragmentVM : RootRecipientVM
     {
         private const string SELECTED_TITLE_LAST = "GHelloWorldFragmentVM.SELECTED_TITLE_LAST";
 
@@ -16,8 +16,8 @@ namespace El.BL
         private readonly CacheRepository _Cache;
         private readonly ILogger _Logger;
 
-        public GHelloWorldFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett,
-            CacheRepository Cache, ILogger<GHelloWorldFragmentVM> Logger) : base(efc)
+        public PlayListFragmentVM(BloggingContext efc, IOptions<AppSettings> Sett,
+            CacheRepository Cache, ILogger<PlayListFragmentVM> Logger) : base(efc)
         {
             _Sett = Sett;
             _Cache = Cache;
@@ -30,7 +30,7 @@ namespace El.BL
             base.OnActivated();
 
             // Register
-            Messenger.Register<GHelloWorldFragmentVM, CurrentTitleRequestMessage>(this, (r, m) =>
+            Messenger.Register<PlayListFragmentVM, CurrentTitleRequestMessage>(this, (r, m) =>
             {
                 // Check and send
                 if (r.SelectedTitle != null) {

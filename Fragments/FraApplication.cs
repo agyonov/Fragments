@@ -55,13 +55,13 @@ namespace Fragments
             if (view != null) {
                 // Show
                 var snak = Snackbar.Make(view,
-                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\nПодробности за грешката се записват в журнала на приложението.",
+                    Resource.String.system_error_text,
                     Snackbar.LengthIndefinite);
                 var snackBarView = snak.View;
                 var textView = (TextView?)snackBarView.FindViewById(Resource.Id.snackbar_text);
                 textView?.SetMaxLines(5);
                 textView?.SetTextAppearance(Resource.Style.GenErrorSnack);
-                snak.SetAction("Ok", (v) => { snak.Dismiss(); });
+                snak.SetAction(Resource.String.ok_button_text, (v) => { snak.Dismiss(); });
                 snak.Show();
             }
         }
@@ -76,13 +76,13 @@ namespace Fragments
             if (view != null) {
                 // Show
                 var snak = Snackbar.Make(view,
-                    "Системна грешка! Ако грешката продължава, моля, обадете се на Поддръжка.\r\nПодробности за грешката се записват в журнала на приложението.",
+                    Resource.String.system_error_text,
                     Snackbar.LengthIndefinite);
                 var snackBarView = snak.View;
                 var textView = (TextView?)snackBarView.FindViewById(Resource.Id.snackbar_text);
                 textView?.SetMaxLines(5);
                 textView?.SetTextAppearance(Resource.Style.GenErrorSnack);
-                snak.SetAction("Ok", (v) => { snak.Dismiss(); });
+                snak.SetAction(Resource.String.ok_button_text, (v) => { snak.Dismiss(); });
                 snak.Show();
             }
         }

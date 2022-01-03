@@ -23,7 +23,7 @@ namespace El.BL
             base.OnActivated();
 
             // Register
-            Messenger.Register<PlayQuoteActivityVM, GHelloWorldFragmentVM.CurrentTitleRequestMessage>(this, (r, m) =>
+            Messenger.Register<PlayQuoteActivityVM, PlayListFragmentVM.CurrentTitleRequestMessage>(this, (r, m) =>
             {
                 // Check and send
                 if (r.SelectedTitle != null) {

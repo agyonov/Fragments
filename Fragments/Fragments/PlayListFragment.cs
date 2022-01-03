@@ -6,12 +6,12 @@ using Fragments.Activities;
 
 namespace Fragments.Fragments
 {
-    public class GHelloWorldFragment : GcFragment<GHelloWorldFragmentVM>, AdapterView.IOnItemClickListener
+    public class PlayListFragment : GcFragment<PlayListFragmentVM>, AdapterView.IOnItemClickListener
     {
 
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        public GHelloWorldFragment() : base(Resource.Layout.g_hello_world_fragment)
+        public PlayListFragment() : base(Resource.Layout.g_hello_world_fragment)
         {
             _cancellationTokenSource = new CancellationTokenSource();
         }
@@ -53,8 +53,6 @@ namespace Fragments.Fragments
             //Start loading
             var ct = _cancellationTokenSource.Token;
             _ = Task.Run(async () => await VM.GetTitlesFormDbAsync(ct), ct);
-
-            throw new Exception("Test exception");
         }
 
         public override void OnStop()
@@ -89,7 +87,7 @@ namespace Fragments.Fragments
 
                     // Show
                     var intent = new Intent(Activity, typeof(PlayQuoteActivity));
-                    intent.PutExtra("SelectedTitle", VM.SelectedTitle.SerializeObject());
+                    intent.PutExtra(PlayQuoteActivity.SELECTED_TITLE_INTENT, VM.SelectedTitle.SerializeObject());
                     StartActivity(intent);
                 } else {
                     // Set it 

@@ -6,7 +6,7 @@
         {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(Activity);
-            builder.SetMessage("Wait, please...");
+            builder.SetMessage(Resource.String.please_wait_text);
             builder.SetCancelable(false);
 
 

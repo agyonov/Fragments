@@ -17,7 +17,7 @@ namespace El.BL
             PlayQuote? res = null;
 
             // Get it
-            var ct = Messenger.Send<GHelloWorldFragmentVM.CurrentTitleRequestMessage>();
+            var ct = Messenger.Send<PlayListFragmentVM.CurrentTitleRequestMessage>();
 
             // return
             if (!ct.HasReceivedResponse) {

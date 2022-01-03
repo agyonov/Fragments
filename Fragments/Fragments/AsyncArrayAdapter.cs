@@ -7,10 +7,10 @@ namespace Fragments.Fragments
 {
     public class AsyncArrayAdapter : ArrayAdapter<Title>
     {
-        private readonly GHelloWorldFragmentVM _Vm;
-        private readonly GHelloWorldFragment _Context;
+        private readonly PlayListFragmentVM _Vm;
+        private readonly PlayListFragment _Context;
 
-        public AsyncArrayAdapter(GHelloWorldFragment Context, int Resource, GHelloWorldFragmentVM Vm) : base(Context.Context, Resource)
+        public AsyncArrayAdapter(PlayListFragment Context, int Resource, PlayListFragmentVM Vm) : base(Context.Context, Resource)
         {
             // Store for usage
             _Vm = Vm;
