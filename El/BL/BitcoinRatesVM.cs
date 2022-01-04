@@ -38,6 +38,9 @@ namespace El.BL
 
         private async Task DownloadRates(CancellationToken ct)
         {
+            // Wait some time for test
+            await Task.Delay(1000, ct).ConfigureAwait(false);
+
             // Get from Internet
             var dr = await _bitcoinClient.GetBitcoinRates(ct).ConfigureAwait(false);
 

@@ -1,13 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
     <TextView
-        android:text="Small Text"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:id="@+id/bitcoin_text_item" 
         android:layout_margin="@dimen/activity_horizontal_margin"/>
-</FrameLayout>
+    <TextView
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:id="@+id/bitcoin_text_item_2" 
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:textAlignment="viewEnd"/>
+</LinearLayout >

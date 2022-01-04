@@ -10,4 +10,5 @@
 	<string name="please_wait_text">Моля, изчакайте...</string>
 	<string name="bitcoin_text_value_title">Биткойн курсове</string>
 	<string name="bitcoin_text_value_date">Към дата/час:</string>
+	<string name="bitcoin_text_refresh_button">Обнови</string>
 </resources>

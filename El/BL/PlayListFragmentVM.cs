@@ -80,7 +80,7 @@ namespace El.BL
                                 orderby b.Url
                                 select new Models.Title(b.Id, b.Url ?? string.Empty))
                               .Take(_Sett.Value.MaxQueueRows)
-                              .ToListAsync(ct);
+                              .ToListAsync(ct).ConfigureAwait(false);
 
             // Get from cache
             var cashedTitle = _Cache.Get<Models.Title>(SELECTED_TITLE_LAST);

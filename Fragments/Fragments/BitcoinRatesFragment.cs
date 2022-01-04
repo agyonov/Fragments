@@ -1,6 +1,7 @@
 ﻿using Android.Views;
 using AndroidX.RecyclerView.Widget;
 using El.BL;
+using Google.Android.Material.ProgressIndicator;
 using Xamarin.Essentials;
 
 
@@ -8,7 +9,7 @@ namespace Fragments.Fragments
 {
     public class BitcoinRatesFragment : GcFragment<BitcoinRatesVM>
     {
-        
+
 
         public BitcoinRatesFragment() : base(Resource.Layout.fragment_bitcoin)
         {
@@ -47,18 +48,31 @@ namespace Fragments.Fragments
             VM.DownloadRatesCommand.PropertyChanged += DownloadRatesCommand_PropertyChanged;
             VM.PropertyChanged += VM_PropertyChanged;
 
-            // call
-            _ = Task.Run(async () => await VM.DownloadRatesCommand.ExecuteAsync(null));
+            // Attach click event
+            bRefresh.Click += BRefresh_Click;
+
+            // call initially
+            BRefresh_Click(null, EventArgs.Empty);
         }
 
         private RecyclerView mRecyclerView = default!;
         private TextView dateTextView = default!;
+        private Button bRefresh = default!;
+        private CircularProgressIndicator cInd = default!;
 
-        private void ChildView(View rootView) 
+        private void ChildView(View rootView)
         {
             // Find recycle view
             mRecyclerView = rootView.FindViewById(Resource.Id.bitcoin_recycle_view_rates) as RecyclerView ?? default!;
-            dateTextView = rootView.FindViewById(Resource.Id.bitcoin_text_date) as TextView ?? default!;
+            dateTextView = rootView.FindViewById(Resource.Id.bitcoin_text_date) as TextView ?? default!; 
+            bRefresh = rootView.FindViewById(Resource.Id.bitcoin_button_refresh) as Button ?? default!;
+            cInd = rootView.FindViewById(Resource.Id.bitcoin_wait_indcator) as CircularProgressIndicator ?? default!;
+        }
+
+        private void BRefresh_Click(object? sender, EventArgs e)
+        {
+            // Call
+            _ = Task.Run(async () => await VM.DownloadRatesCommand.ExecuteAsync(null)); 
         }
 
         private void VM_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -70,7 +84,7 @@ namespace Fragments.Fragments
                     {
                         // Mark date
                         if (dateTextView != null) {
-                            dateTextView.Text = $"{Resources.GetString(Resource.String.bitcoin_text_value_date)} {VM.DT.ToLocalTime():dd.MM.yyyy HH:mm:ss}";
+                            dateTextView.Text = $"{Resources.GetString(Resource.String.bitcoin_text_value_date)} {VM.DT.ToLocalTime():dd.MM.yyyy HH:mm}";
                         }
                     });
                     break;
@@ -87,6 +101,13 @@ namespace Fragments.Fragments
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         // Mark ended
+                        if (VM.DownloadRatesCommand.IsRunning) {
+                            bRefresh.Enabled = false;
+                            cInd.Visibility = ViewStates.Visible;
+                        } else {
+                            cInd.Visibility = ViewStates.Invisible;
+                            bRefresh.Enabled = true;
+                        }
                     });
                     break;
                 default:
@@ -136,9 +157,8 @@ namespace Fragments.Fragments
                 var hold = holder as ViewHolder;
 
                 if (hold != null) {
-                    if (hold.DataText != null) {
-                        hold.DataText.Text = _Context.VM.Rates[position].Description;
-                    }
+                    hold.DataText.Text = _Context.VM.Rates[position].Description;
+                    hold.DataText2.Text = $"1 XBT = {_Context.VM.Rates[position].Rate} {_Context.VM.Rates[position].Code}";
                 }
             }
 
@@ -155,13 +175,16 @@ namespace Fragments.Fragments
             /// </summary>
             public class ViewHolder : RecyclerView.ViewHolder
             {
-                private readonly TextView? _DataText;
-                public TextView? DataText => _DataText;
+                private readonly TextView _DataText;
+                public TextView DataText => _DataText;
+                private readonly TextView _DataText2;
+                public TextView DataText2 => _DataText2;
 
                 public ViewHolder(View? itemView) : base(itemView)
                 {
                     // Store
-                    _DataText = itemView?.FindViewById(Resource.Id.bitcoin_text_item) as TextView;
+                    _DataText = itemView?.FindViewById(Resource.Id.bitcoin_text_item) as TextView ?? default!;
+                    _DataText2 = itemView?.FindViewById(Resource.Id.bitcoin_text_item_2) as TextView ?? default!;
                 }
             }
         }

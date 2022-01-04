@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:minWidth="25px"
     android:minHeight="25px"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/bitcoin_relative_main"
->
+    android:id="@+id/bitcoin_relative_main">
     <TextView
         android:text="@string/bitcoin_text_value_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -15,22 +15,46 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:id="@+id/bitcoin_text_title"/>
-    <TextView
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bitcoin_text_date"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_below="@id/bitcoin_text_title"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_below="@id/bitcoin_text_title"
+        android:id="@+id/bitcoin_text_date_layout">
+        <TextView
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/bitcoin_text_date"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_below="@id/bitcoin_text_title"/>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" 
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:id="@+id/bitcoin_wait_indcator" />
+        <Button
+            android:id="@+id/bitcoin_button_refresh"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="@string/bitcoin_text_refresh_button"
+            app:icon="@drawable/ic_baseline_refresh_24"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:id="@+id/bitcoin_recycle_view_rates"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_below="@id/bitcoin_text_date"
+        android:layout_below="@id/bitcoin_text_date_layout"
         android:layout_height="match_parent"
         />
-
 </RelativeLayout>
