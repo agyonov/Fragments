@@ -4,7 +4,12 @@
     <ActiveDebugProfile>tablet</ActiveDebugProfile>
     <DefaultDevice>tablet</DefaultDevice>
     <AndroidDesignerPreferredDevice>10.1in WXGA %28Tablet%29</AndroidDesignerPreferredDevice>
-    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredTheme>Theme.MaterialComponents.DayNight.NoActionBar</AndroidDesignerPreferredTheme>
     <ActiveDebugFramework>net6.0-android</ActiveDebugFramework>
+    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
+    <SelectedDevice>tablet</SelectedDevice>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

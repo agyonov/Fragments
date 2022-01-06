@@ -16,7 +16,6 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:id="@+id/bitcoin_text_title"/>
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -36,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:indeterminate="true" 
+            android:indeterminate="true"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:id="@+id/bitcoin_wait_indcator" />
         <Button
@@ -46,7 +45,8 @@
             android:layout_weight="1"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="@string/bitcoin_text_refresh_button"
-            app:icon="@drawable/ic_baseline_refresh_24"/>
+            app:icon="@drawable/ic_baseline_refresh_24"
+            style="@style/Widget.MaterialComponents.Button.Icon" />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:minWidth="25px"

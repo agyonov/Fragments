@@ -11,7 +11,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:id="@+id/bitcoin_text_item" 
-        android:layout_margin="@dimen/activity_horizontal_margin"/>
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="2dp"/>
     <TextView
         android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -19,6 +20,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:id="@+id/bitcoin_text_item_2" 
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="2dp"
         android:textAlignment="viewEnd"/>
 </LinearLayout >
