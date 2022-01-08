@@ -13,6 +13,9 @@
 	  <TrimMode>copyused</TrimMode>
 	  <PublishTrimmed>True</PublishTrimmed>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <TrimMode>copyused</TrimMode>
+	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\app.settings.json" />
 	  <None Remove="Resources\drawable\splash_screen.xml" />
