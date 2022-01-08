@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-android</TargetFrameworks>
+		<TargetFramework>net6.0-android</TargetFramework>
+		<SupportedOSPlatformVersion>29</SupportedOSPlatformVersion>
 		<OutputType>Exe</OutputType>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -8,29 +9,9 @@
 		<ApplicationVersion>1</ApplicationVersion>
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
-	  <DebugSymbols>True</DebugSymbols>
 	  <TrimMode>copyused</TrimMode>
-	  <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-	  <AndroidTlsProvider>btls</AndroidTlsProvider>
-	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <EnableLLVM>False</EnableLLVM>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
-	  <TrimMode>copyused</TrimMode>
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-	  <AndroidTlsProvider>btls</AndroidTlsProvider>
-	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <AndroidLinkTool>r8</AndroidLinkTool>
-	  <EnableLLVM>False</EnableLLVM>
-	  <DebugSymbols>False</DebugSymbols>
+	  <PublishTrimmed>True</PublishTrimmed>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\app.settings.json" />
@@ -48,9 +29,6 @@
 		<PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.3" />
 		<PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
 		<PackageReference Include="Xamarin.Google.Android.Material" Version="1.4.0.4" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Properties\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\El\El.csproj" />
