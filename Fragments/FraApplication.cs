@@ -6,7 +6,7 @@ using Xamarin.Essentials;
 namespace Fragments
 {
     [Application(HardwareAccelerated = true)]
-    public class FraApplication : Application
+    public class FraApplication : Android.App.Application
     {
         public FraApplication(IntPtr handle, JniHandleOwnership transfer)
             : base(handle, transfer)

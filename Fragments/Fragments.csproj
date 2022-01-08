@@ -14,17 +14,8 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android31.0|AnyCPU'">
-		<DebugSymbols>True</DebugSymbols>
-		<AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-		<AndroidTlsProvider>btls</AndroidTlsProvider>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android31.0|AnyCPU'">
-		<DebugSymbols>True</DebugSymbols>
-		<AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-		<AndroidTlsProvider>btls</AndroidTlsProvider>
-	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
+	  <DebugSymbols>True</DebugSymbols>
 	  <TrimMode>copyused</TrimMode>
 	  <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
 	  <AndroidTlsProvider>btls</AndroidTlsProvider>
@@ -39,6 +30,7 @@
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidLinkTool>r8</AndroidLinkTool>
 	  <EnableLLVM>False</EnableLLVM>
+	  <DebugSymbols>False</DebugSymbols>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\app.settings.json" />

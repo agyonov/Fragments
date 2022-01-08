@@ -53,7 +53,7 @@ namespace Fragments.Activities
                 Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(() =>
                 {
                     // Open Main
-                    StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+                    StartActivity(new Intent(Android.App.Application.Context, typeof(MainActivity)));
                 });
             }
         }
