@@ -16,6 +16,8 @@
 	  <RunAOTCompilation>True</RunAOTCompilation>
 	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 	  <EnableLLVM>False</EnableLLVM>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <TrimMode>link</TrimMode>
