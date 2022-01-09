@@ -25,7 +25,7 @@ namespace Fragments
                 // Get path
                 string? DocumentsPath = null;
                 if (Android.OS.Environment.MediaMounted.Equals(Android.OS.Environment.ExternalStorageState)) {
-                    DocumentsPath = BaseContext?.GetExternalFilesDir("DirectoryDocuments")?.AbsolutePath;
+                    DocumentsPath = BaseContext?.GetExternalFilesDir(null)?.AbsolutePath;
                 }
 
                 // Attach global exception handlers

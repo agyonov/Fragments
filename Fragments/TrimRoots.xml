@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<linker>
+	<assembly fullname="System.Private.CoreLib" preserve="all" />
+	<assembly fullname="Db" preserve="all" />
+	<assembly fullname="El" preserve="all" />
+	<assembly fullname="Fragments" preserve="all" />
+</linker>

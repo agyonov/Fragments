@@ -10,11 +10,20 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <TrimMode>copyused</TrimMode>
+	  <TrimMode>link</TrimMode>
 	  <PublishTrimmed>True</PublishTrimmed>
+	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+	  <RunAOTCompilation>True</RunAOTCompilation>
+	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+	  <EnableLLVM>False</EnableLLVM>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <TrimMode>copyused</TrimMode>
+	  <TrimMode>link</TrimMode>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+	  <PublishTrimmed>True</PublishTrimmed>
+	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+	  <EnableLLVM>False</EnableLLVM>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\app.settings.json" />
@@ -23,6 +32,10 @@
 	  <None Remove="Resources\layout\fragment_bitcoin.xml" />
 	  <None Remove="Resources\layout\fragment_bitcoin_item.xml" />
 	  <None Remove="Resources\layout\g_hello_world_fragment.xml" />
+	  <None Remove="TrimRoots.xml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <LinkDescription Include="TrimRoots.xml" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
