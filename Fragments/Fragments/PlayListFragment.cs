@@ -66,6 +66,15 @@ namespace Fragments.Fragments
             base.OnStop();
         }
 
+        public override void OnDestroy()
+        {
+            // Clear selection
+            VM.SelectedTitle = null;
+
+            // call parent
+            base.OnDestroy();
+        }
+
         public void OnItemClick(AdapterView? parent, View? view, int position, long id)
         {
             // Set data

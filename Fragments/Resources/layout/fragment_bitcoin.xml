@@ -31,22 +31,30 @@
             android:id="@+id/bitcoin_text_date"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:layout_below="@id/bitcoin_text_title"/>
-        <com.google.android.material.progressindicator.CircularProgressIndicator
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
             android:layout_weight="1"
+            android:gravity="end">
+         <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"
             android:layout_margin="@dimen/activity_horizontal_margin"
-            android:id="@+id/bitcoin_wait_indcator" />
+            android:id="@+id/bitcoin_wait_indcator"
+            android:visibility="gone"
+            />
         <Button
             android:id="@+id/bitcoin_button_refresh"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="@string/bitcoin_text_refresh_button"
             app:icon="@drawable/ic_baseline_refresh_24"
             style="@style/Widget.MaterialComponents.Button.Icon" />
+        </LinearLayout>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:minWidth="25px"

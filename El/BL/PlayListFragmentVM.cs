@@ -49,18 +49,15 @@ namespace El.BL
         }
 
         private List<Models.Title> titles = new List<Models.Title>();
-        public List<Models.Title> Titles
-        {
+        public List<Models.Title> Titles {
             get => titles;
             set => SetProperty(ref titles, value);
         }
 
         private Models.Title? selectedTitle = null;
-        public Models.Title? SelectedTitle
-        {
+        public Models.Title? SelectedTitle {
             get => selectedTitle;
-            set
-            {
+            set {
                 // Set into cache
                 if (value != null) {
                     _Cache.Add(SELECTED_TITLE_LAST, value);

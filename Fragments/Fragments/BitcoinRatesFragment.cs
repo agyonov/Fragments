@@ -44,6 +44,11 @@ namespace Fragments.Fragments
             // call parent
             base.OnStart();
 
+            // Mark date
+            if (dateTextView != null && VM.DT != default) {
+                dateTextView.Text = $"{Resources.GetString(Resource.String.bitcoin_text_value_date)} {VM.DT.ToLocalTime():dd.MM.yyyy HH:mm}";
+            }
+
             // Attach
             VM.DownloadRatesCommand.PropertyChanged += DownloadRatesCommand_PropertyChanged;
             VM.PropertyChanged += VM_PropertyChanged;
@@ -52,7 +57,9 @@ namespace Fragments.Fragments
             bRefresh.Click += BRefresh_Click;
 
             // call initially
-            BRefresh_Click(null, EventArgs.Empty);
+            if (VM.DT == default || (DateTimeOffset.Now - VM.DT).TotalMinutes >= 1.2 ) {
+                BRefresh_Click(null, EventArgs.Empty);
+            }
         }
 
         private RecyclerView mRecyclerView = default!;
@@ -64,7 +71,7 @@ namespace Fragments.Fragments
         {
             // Find recycle view
             mRecyclerView = rootView.FindViewById(Resource.Id.bitcoin_recycle_view_rates) as RecyclerView ?? default!;
-            dateTextView = rootView.FindViewById(Resource.Id.bitcoin_text_date) as TextView ?? default!; 
+            dateTextView = rootView.FindViewById(Resource.Id.bitcoin_text_date) as TextView ?? default!;
             bRefresh = rootView.FindViewById(Resource.Id.bitcoin_button_refresh) as Button ?? default!;
             cInd = rootView.FindViewById(Resource.Id.bitcoin_wait_indcator) as CircularProgressIndicator ?? default!;
         }
@@ -72,7 +79,7 @@ namespace Fragments.Fragments
         private void BRefresh_Click(object? sender, EventArgs e)
         {
             // Call
-            _ = Task.Run(async () => await VM.DownloadRatesCommand.ExecuteAsync(null)); 
+            _ = Task.Run(async () => await VM.DownloadRatesCommand.ExecuteAsync(null));
         }
 
         private void VM_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -102,11 +109,11 @@ namespace Fragments.Fragments
                     {
                         // Mark ended
                         if (VM.DownloadRatesCommand.IsRunning) {
-                            bRefresh.Enabled = false;
+                            bRefresh.Visibility = ViewStates.Gone;
                             cInd.Visibility = ViewStates.Visible;
                         } else {
-                            cInd.Visibility = ViewStates.Invisible;
-                            bRefresh.Enabled = true;
+                            cInd.Visibility = ViewStates.Gone;
+                            bRefresh.Visibility = ViewStates.Visible;
                         }
                     });
                     break;

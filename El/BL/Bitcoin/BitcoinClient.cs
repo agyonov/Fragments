@@ -1,5 +1,6 @@
 ﻿using El.BL.Bitcoin.Models;
 using El.Models;
+using El.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
@@ -11,14 +12,8 @@ namespace El.BL.Bitcoin
 {
     public class BitcoinClient : ClassRoot
     {
-        private readonly IOptions<AppSettings> _appSettings;
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _settings;
-        private readonly ILogger _Logger;
-
-        private const double MinDnsSecodsToWait = 15.0;
-
-        protected JsonSerializerOptions JsonSerializerSettings => _settings;
+        // Locals
+        private readonly RootBitcoinHttpClient _httpClient;
 
         #region Constructor and Destructor
 
@@ -26,23 +21,10 @@ namespace El.BL.Bitcoin
         /// Initializing constructor
         /// </summary>
         /// <param name="AppSettings"></param>
-        public BitcoinClient(IOptions<AppSettings> AppSettings, ILogger<BitcoinClient> Logger)
+        public BitcoinClient(RootBitcoinHttpClient HttpClient)
         {
             // Store
-            _appSettings = AppSettings;
-            _Logger = Logger;
-
-            // Create http client
-            _httpClient = new HttpClient(new SocketsHttpHandler
-            {
-                ConnectTimeout = TimeSpan.FromSeconds(MinDnsSecodsToWait)
-            })
-            {
-                Timeout = TimeSpan.FromSeconds(_appSettings.Value.ApiCmdTimeout)
-            };
-
-            // Create JSON Settings
-            _settings = CreateSerializerSettings();
+            _httpClient = HttpClient;
         }
 
         /// <summary>
@@ -52,10 +34,7 @@ namespace El.BL.Bitcoin
         {
             // Free 
             if (flag) {
-                // Dispose http Client
-                if (_httpClient != null) {
-                    _httpClient.Dispose();
-                }
+                
             }
         }
 
@@ -63,10 +42,7 @@ namespace El.BL.Bitcoin
         {
             // Free 
             if (flag) {
-                // Dispose http Client
-                if (_httpClient != null) {
-                    _httpClient.Dispose();
-                }
+                
             }
 
 
@@ -75,50 +51,31 @@ namespace El.BL.Bitcoin
 
         #endregion Constructor and Destructor
 
-
+        // Get some rates
         public async Task<BitcoinResult?> GetBitcoinRates(CancellationToken cancellationToken)
         {
             // set url
-            var url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+            var url = "bpi/currentprice.json";
 
-            // Create reuquest object
-            using (var request = new HttpRequestMessage()) {
-                // Send it
-                var response = await _httpClient.GetAsync(url, cancellationToken).ConfigureAwait(false);
+            // Send it
+            var response = await _httpClient.GetAsync(url, cancellationToken).ConfigureAwait(false);
+            
+            // Check
+            if (response != null) {
+                // Get status
+                var status = (int)response.StatusCode;  
 
-                // Check
-                if (response != null) {
-                    // Get status
-                    var status = (int)response.StatusCode;
-
-                    // process status
-                    if (status == 200) {
-                        return await response.Content.ReadFromJsonAsync<BitcoinResult>(JsonSerializerSettings, cancellationToken).ConfigureAwait(false);
-                    } else {
-                        // Throw
-                        throw new Exception("Http Api error");
-                    }
+                // process status
+                if (status == 200) {
+                    return await response.Content.ReadFromJsonAsync<BitcoinResult>(_httpClient.JsonSettings, cancellationToken).ConfigureAwait(false);
                 } else {
-                    // return
-                    return await Task.FromResult<BitcoinResult?>(null).ConfigureAwait(false);
+                    // Throw
+                    throw new Exception("Http Api error");
                 }
+            } else {
+                // return
+                return await Task.FromResult<BitcoinResult?>(null).ConfigureAwait(false);
             }
-        }
-
-        private JsonSerializerOptions CreateSerializerSettings()
-        {
-            return new JsonSerializerOptions
-            {
-                AllowTrailingCommas = true,
-                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = false,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                ReadCommentHandling = JsonCommentHandling.Skip,
-                WriteIndented = false,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                NumberHandling = JsonNumberHandling.AllowReadingFromString,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-            };
         }
     }
 }

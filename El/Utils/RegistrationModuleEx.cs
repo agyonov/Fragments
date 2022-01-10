@@ -1,5 +1,6 @@
 ﻿using El.Interfaces;
 using El.Models;
+using El.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -16,12 +17,14 @@ namespace El
             // Register Singleton instances and factories
             builder.AddSingleton<ILibObjectsFactory, LibObjectsFactory>();
             builder.AddSingleton<CacheRepository>();
+            builder.AddSingleton<RootBitcoinHttpClient>();
 
             // Register other objects
             builder.AddTransient<IRetryService, RetryService>();
 
             // Register DB Connection & adder special components
             builder.AddTransient(cont => (new LibObjectsFactory(cont)).CreateInstanceDb());
+
 
             // Get public non-abstract classes
             var realClasses = from c in typeof(RegistrationModuleEx).Assembly.ExportedTypes
