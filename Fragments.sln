@@ -5,11 +5,9 @@ VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fragments", "Fragments\Fragments.csproj", "{16A17C49-6BBB-4AD0-928B-8B74D545B06C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationHelper", "MigrationHelper\MigrationHelper.csproj", "{89B62ADC-7259-4028-A837-74D1A0A24E01}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Db", "Db\Db.csproj", "{8DD32078-AF93-459B-B2D5-6B3F025CB8DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "El", "El\El.csproj", "{F1E9F188-B7E4-44F2-B8C3-8278CE910C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "El", "El\El.csproj", "{F1E9F188-B7E4-44F2-B8C3-8278CE910C36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{16A17C49-6BBB-4AD0-928B-8B74D545B06C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A17C49-6BBB-4AD0-928B-8B74D545B06C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16A17C49-6BBB-4AD0-928B-8B74D545B06C}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{89B62ADC-7259-4028-A837-74D1A0A24E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89B62ADC-7259-4028-A837-74D1A0A24E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89B62ADC-7259-4028-A837-74D1A0A24E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89B62ADC-7259-4028-A837-74D1A0A24E01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DD32078-AF93-459B-B2D5-6B3F025CB8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DD32078-AF93-459B-B2D5-6B3F025CB8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD32078-AF93-459B-B2D5-6B3F025CB8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU

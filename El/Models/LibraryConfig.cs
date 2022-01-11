@@ -53,10 +53,14 @@
         /// </summary>
         public int EFBatchSize { get; init; } = 50;
 
-
         /// <summary>
         /// Name of main DB
         /// </summary>
         public string DbNameMain { get; init; } = "blogging.db";
+
+        /// <summary>
+        /// Name of main DB
+        /// </summary>
+        public string EsriKey { get; init; } = "blogging.db";
     }
 }

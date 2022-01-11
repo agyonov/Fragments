@@ -9,27 +9,13 @@
 		<ApplicationVersion>1</ApplicationVersion>
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <TrimMode>link</TrimMode>
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
-	  <EnableLLVM>False</EnableLLVM>
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-	  <AndroidTlsProvider>btls</AndroidTlsProvider>
-	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <TrimMode>link</TrimMode>
-	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
-	  <EnableLLVM>False</EnableLLVM>
-	  <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-	  <AndroidTlsProvider>btls</AndroidTlsProvider>
+	  <NoWarn>1701;1702;ESRI8000</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <NoWarn>1701;1702;ESRI8000</NoWarn>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\app.settings.json" />
@@ -37,6 +23,7 @@
 	  <None Remove="Resources\layout\activity_play_quote.xml" />
 	  <None Remove="Resources\layout\fragment_bitcoin.xml" />
 	  <None Remove="Resources\layout\fragment_bitcoin_item.xml" />
+	  <None Remove="Resources\layout\fragment_map.xml" />
 	  <None Remove="Resources\layout\g_hello_world_fragment.xml" />
 	  <None Remove="TrimRoots.xml" />
 	</ItemGroup>
@@ -44,6 +31,7 @@
 	  <LinkDescription Include="TrimRoots.xml" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Esri.ArcGISRuntime.Xamarin.Android" Version="100.13.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="4.2.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />

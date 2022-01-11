@@ -6,6 +6,7 @@
     "DbCmdTimeout": 5,
     "ApiCmdTimeout": 15,
     "EFBatchSize": 50,
-    "DbNameMain":  "my_blogging.db"
+    "DbNameMain": "my_blogging.db",
+    "EsriKey": "AAPKd352a903e6a74ba68696c8cdc75a990b-iMR7ri32ol8ozqBojN_JRf76nLXJ6PkIi41u_sgc2_TAvbR7pd4hX_Hf1QPVeLc"
   }
 }

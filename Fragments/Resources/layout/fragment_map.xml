@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/id_linear_layoyt_top_map" >
+    <Esri.ArcGISRuntime.UI.Controls.MapView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:id="@+id/the_map_at_top_map" />
+
+</LinearLayout>

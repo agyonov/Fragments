@@ -83,8 +83,12 @@ namespace Fragments
 
                 // Set min threads
                 using (var scope = ServiceProvider.CreateScope()) {
+                    // Set men threads
                     var appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>();
                     ThreadPool.SetMinThreads(appSettings.Value.MinThreads, appSettings.Value.MinIOThreads);
+
+                    //Set Esri key
+                    Esri.ArcGISRuntime.ArcGISRuntimeEnvironment.ApiKey = appSettings.Value.EsriKey;
                 }
 
                 // Migrate
