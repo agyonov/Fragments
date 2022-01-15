@@ -57,7 +57,7 @@ namespace Fragments.Fragments
             bRefresh.Click += BRefresh_Click;
 
             // call initially
-            if (VM.DT == default || (DateTimeOffset.Now - VM.DT).TotalMinutes >= 1.2 ) {
+            if (VM.DT == default || (DateTimeOffset.Now - VM.DT).TotalMinutes >= 1.2) {
                 BRefresh_Click(null, EventArgs.Empty);
             }
         }

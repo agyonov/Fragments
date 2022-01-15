@@ -1,21 +1,15 @@
 ﻿using Android.Views;
 using El.BL;
-using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.UI.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace Fragments.Fragments
 {
-    public  class MapFragment : GcFragment<MapVM>
+    public class MapFragment : GcFragment<MapVM>
     {
         public MapFragment() : base(Resource.Layout.fragment_map)
         {
-            
+
         }
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -42,7 +36,7 @@ namespace Fragments.Fragments
             base.OnStart();
 
             // Create new Map with basemap
-            _ = Task.Run(() => VM.CreateMapCommand.Execute(null));
+            _ = Task.Run(async () => await VM.CreateMapCommand.ExecuteAsync(null));
         }
 
         private MapView _topMapView = default!;

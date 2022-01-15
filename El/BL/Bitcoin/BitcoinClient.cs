@@ -1,12 +1,6 @@
 ﻿using El.BL.Bitcoin.Models;
-using El.Models;
 using El.Utils;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace El.BL.Bitcoin
 {
@@ -34,7 +28,7 @@ namespace El.BL.Bitcoin
         {
             // Free 
             if (flag) {
-                
+
             }
         }
 
@@ -42,7 +36,7 @@ namespace El.BL.Bitcoin
         {
             // Free 
             if (flag) {
-                
+
             }
 
 
@@ -59,11 +53,11 @@ namespace El.BL.Bitcoin
 
             // Send it
             var response = await _httpClient.GetAsync(url, cancellationToken).ConfigureAwait(false);
-            
+
             // Check
             if (response != null) {
                 // Get status
-                var status = (int)response.StatusCode;  
+                var status = (int)response.StatusCode;
 
                 // process status
                 if (status == 200) {

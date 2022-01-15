@@ -1,11 +1,6 @@
 ﻿using Db;
 using Esri.ArcGISRuntime.Mapping;
 using Microsoft.Toolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace El.BL
 {
@@ -13,7 +8,7 @@ namespace El.BL
     {
         public MapVM(BloggingContext efc) : base(efc)
         {
-            CreateMapCommand = new RelayCommand(() => CreateMap());
+            CreateMapCommand = new AsyncRelayCommand(async () => await CreateMap());
         }
 
         private Map _WorldMap = default!;
@@ -24,13 +19,16 @@ namespace El.BL
             }
         }
 
-        public IRelayCommand CreateMapCommand { get; }
+        public IAsyncRelayCommand CreateMapCommand { get; }
 
-
-        private void CreateMap()
+        private async Task CreateMap()
         {
             // Create new Map with basemap
-            WorldMap = new Map(BasemapStyle.ArcGISStreets);
+            var _tmp = new Map(BasemapStyle.OSMStreets);
+            await _tmp.LoadAsync();
+
+            // Set it
+            WorldMap = _tmp;
         }
     }
 }

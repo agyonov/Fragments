@@ -26,9 +26,6 @@ namespace Fragments
             var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            //// Set test
-            //Esri.ArcGISRuntime.ArcGISRuntimeEnvironment.ApiKey = "AAPKd352a903e6a74ba68696c8cdc75a990b-iMR7ri32ol8ozqBojN_JRf76nLXJ6PkIi41u_sgc2_TAvbR7pd4hX_Hf1QPVeLc";
-
             var fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             if (fab != null) fab.Click += FabOnClick;
 
