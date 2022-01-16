@@ -1,6 +1,8 @@
 ﻿using Db;
 using El.BL.Bitcoin;
 using El.BL.Bitcoin.Models;
+using El.Interfaces;
+using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace El.BL
@@ -12,20 +14,22 @@ namespace El.BL
 
         private readonly BitcoinClient _bitcoinClient;
         private readonly CacheRepository _Cache;
+        private readonly ILogger _Logger;
 
         public BitcoinRatesVM(BloggingContext efc, BitcoinClient BitcoinClient,
-            CacheRepository Cache) : base(efc)
+                            CacheRepository Cache, ILogger<BitcoinRatesVM> Logger) : base(efc)
         {
             // Store
             _bitcoinClient = BitcoinClient;
             _Cache = Cache;
+            _Logger = Logger;
 
             // Create commands
             DownloadRatesCommand = new AsyncRelayCommand((ct) => DownloadRates(ct));
         }
 
 
-        private List<RateItem> rates = new List<RateItem>();
+        private List<RateItem> rates = new();
         public List<RateItem> Rates {
             get {
                 var cashedRates = _Cache.Get<List<RateItem>>(BT_DOWNLOAD_DATA);
@@ -43,7 +47,7 @@ namespace El.BL
             }
         }
 
-        private DateTimeOffset dT = new DateTimeOffset();
+        private DateTimeOffset dT = new();
         public DateTimeOffset DT {
             get {
 
@@ -68,7 +72,14 @@ namespace El.BL
         private async Task DownloadRates(CancellationToken ct)
         {
             // Get from Internet
-            var dr = await _bitcoinClient.GetBitcoinRates(ct).ConfigureAwait(false);
+            BitcoinResult? dr = null;
+
+            try {
+                // Load that thing
+                dr = await  _bitcoinClient.GetBitcoinRates(ct).ConfigureAwait(false);
+            } catch (Exception err) {
+                _Logger.LogWarning(err, "Error when trying to load Bitcoin rates");
+            }
 
             // Create result
             var res = new List<RateItem>();
@@ -81,8 +92,13 @@ namespace El.BL
 
                 // Attach
                 DT = dr.Time.UpdatedISO;
-                Rates = res;
+            } else {
+                // Attach
+                DT = DateTimeOffset.MinValue;
             }
+
+            // Set rates
+            Rates = res;
         }
     }
 }

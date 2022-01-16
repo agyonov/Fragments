@@ -1,4 +1,5 @@
 ﻿using El.BL.Bitcoin.Models;
+using El.Interfaces;
 using El.Utils;
 using System.Net.Http.Json;
 
@@ -8,6 +9,7 @@ namespace El.BL.Bitcoin
     {
         // Locals
         private readonly RootBitcoinHttpClient _httpClient;
+        private readonly IRetryService _Ret;
 
         #region Constructor and Destructor
 
@@ -15,10 +17,11 @@ namespace El.BL.Bitcoin
         /// Initializing constructor
         /// </summary>
         /// <param name="AppSettings"></param>
-        public BitcoinClient(RootBitcoinHttpClient HttpClient)
+        public BitcoinClient(RootBitcoinHttpClient HttpClient, IRetryService Ret)
         {
             // Store
             _httpClient = HttpClient;
+            _Ret = Ret;
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace El.BL.Bitcoin
             var url = "bpi/currentprice.json";
 
             // Send it
-            var response = await _httpClient.GetAsync(url, cancellationToken).ConfigureAwait(false);
+            var response = await _Ret.ExecuteWithParamRetry((lUrl, lCt) => _httpClient.GetAsync(lUrl, lCt), url, cancellationToken).ConfigureAwait(false);
 
             // Check
             if (response != null) {

@@ -13,7 +13,7 @@ namespace El
                                 .WaitAndRetryAsync(2, retryAttempt => TimeSpan.FromMilliseconds(retryAttempt * 250));
         }
 
-        public async Task<T> ExecuteWithRetry<T>(Func<Task<T>> method) where T : notnull
+        public async Task<T> ExecuteWithRetry<T>(Func<Task<T>> method) 
         {
 
             T res = default!;
@@ -31,7 +31,7 @@ namespace El
             return res!;
         }
 
-        public async Task<T> ExecuteWithRetry<T>(Func<CancellationToken, Task<T>> method, CancellationToken ct) where T : notnull
+        public async Task<T> ExecuteWithRetry<T>(Func<CancellationToken, Task<T>> method, CancellationToken ct) 
         {
 
             T res = default!;
@@ -50,7 +50,7 @@ namespace El
         }
 
 
-        public async Task<T> ExecuteWithParamRetry<T, M>(Func<M, Task<T>> method, M data) where T : notnull
+        public async Task<T> ExecuteWithParamRetry<T, M>(Func<M, Task<T>> method, M data) 
         {
 
             T res = default!;
@@ -68,7 +68,7 @@ namespace El
             return res!;
         }
 
-        public async Task<T> ExecuteWithParamRetry<T, M>(Func<M, CancellationToken, Task<T>> method, M data, CancellationToken ct) where T : notnull
+        public async Task<T> ExecuteWithParamRetry<T, M>(Func<M, CancellationToken, Task<T>> method, M data, CancellationToken ct) 
         {
 
             T res = default!;

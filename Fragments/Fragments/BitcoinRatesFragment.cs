@@ -91,8 +91,15 @@ namespace Fragments.Fragments
                     {
                         // Mark date
                         if (dateTextView != null) {
-                            dateTextView.Text = $"{Resources.GetString(Resource.String.bitcoin_text_value_date)} {VM.DT.ToLocalTime():dd.MM.yyyy HH:mm}";
-                        }
+                            // Check result
+                            if (VM.DT != DateTimeOffset.MinValue) {
+                                // Set date time
+                                dateTextView.Text = $"{Resources.GetString(Resource.String.bitcoin_text_value_date)} {VM.DT.ToLocalTime():dd.MM.yyyy HH:mm}";
+                            } else {
+                                // Set ntify
+                                dateTextView.Text = "No connection with server";
+                            }
+                        } 
                     });
                     break;
                 default:
@@ -107,8 +114,8 @@ namespace Fragments.Fragments
                     // Notify
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        // Mark ended
-                        if (VM.DownloadRatesCommand.IsRunning) {
+                    // Mark ended
+                    if (VM.DownloadRatesCommand.IsRunning) {
                             bRefresh.Visibility = ViewStates.Gone;
                             cInd.Visibility = ViewStates.Visible;
                         } else {
@@ -147,8 +154,8 @@ namespace Fragments.Fragments
                         // Notify
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            // Reload list
-                            NotifyDataSetChanged();
+                        // Reload list
+                        NotifyDataSetChanged();
                         });
                         break;
                     default:
