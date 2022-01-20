@@ -55,23 +55,23 @@ namespace El.BL.Bitcoin
             var url = "bpi/currentprice.json";
 
             // Send it
-            var response = await _Ret.ExecuteWithParamRetry((lUrl, lCt) => _httpClient.GetAsync(lUrl, lCt), url, cancellationToken).ConfigureAwait(false);
+            using (var response = await _Ret.ExecuteWithParamRetry((lUrl, lCt) => _httpClient.GetAsync(lUrl, lCt), url, cancellationToken).ConfigureAwait(false)) {
+                // Check
+                if (response != null) {
+                    // Get status
+                    var status = (int)response.StatusCode;
 
-            // Check
-            if (response != null) {
-                // Get status
-                var status = (int)response.StatusCode;
-
-                // process status
-                if (status == 200) {
-                    return await response.Content.ReadFromJsonAsync<BitcoinResult>(_httpClient.JsonSettings, cancellationToken).ConfigureAwait(false);
+                    // process status
+                    if (status == 200) {
+                        return await response.Content.ReadFromJsonAsync<BitcoinResult>(_httpClient.JsonSettings, cancellationToken).ConfigureAwait(false);
+                    } else {
+                        // Throw
+                        throw new Exception("Http Api error");
+                    }
                 } else {
-                    // Throw
-                    throw new Exception("Http Api error");
+                    // return
+                    return await Task.FromResult<BitcoinResult?>(null).ConfigureAwait(false);
                 }
-            } else {
-                // return
-                return await Task.FromResult<BitcoinResult?>(null).ConfigureAwait(false);
             }
         }
     }

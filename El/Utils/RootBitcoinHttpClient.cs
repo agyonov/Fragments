@@ -8,9 +8,6 @@ namespace El.Utils
 {
     public class RootBitcoinHttpClient : HttpClient
     {
-        // Some DNS timeout
-        private const double MinDnsSecodsToWait = 15.0;
-
         // Options
         private readonly IOptions<AppSettings> _appSettings;
 
@@ -18,11 +15,7 @@ namespace El.Utils
         private readonly JsonSerializerOptions _jsonSettings;
         public JsonSerializerOptions JsonSettings => _jsonSettings;
 
-        public RootBitcoinHttpClient(IOptions<AppSettings> AppSettings) : base(new SocketsHttpHandler
-        {
-            ConnectTimeout = TimeSpan.FromSeconds(MinDnsSecodsToWait),
-
-        })
+        public RootBitcoinHttpClient(IOptions<AppSettings> AppSettings, HttpMessageHandler handler) : base(handler, true)
         {
             // Store
             _appSettings = AppSettings;
@@ -31,6 +24,7 @@ namespace El.Utils
             Timeout = TimeSpan.FromSeconds(_appSettings.Value.ApiCmdTimeout);
             DefaultRequestVersion = new Version(2, 0);
             MaxResponseContentBufferSize = 134217728; // 128Mb
+            DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
             BaseAddress = new Uri("https://api.coindesk.com/v1/");
 
             // Set JSON serializer

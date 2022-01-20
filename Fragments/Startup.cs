@@ -8,11 +8,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Xamarin.Android.Net;
 
 namespace Fragments
 {
     internal static class Startup
     {
+        // Some DNS timeout
+        private const double MinDnsSecodsToWait = 15.0;
+
         // Store some general
         private static IHost bHost = default!;
         internal static IServiceProvider ServiceProvider => bHost.Services;
@@ -75,6 +79,12 @@ namespace Fragments
 
                         // Configure my service
                         hostingContext.ConfigureContainer(services);
+
+                        // Add some Android special stuff
+                        services.AddTransient<HttpMessageHandler>(c => new AndroidClientHandler
+                        {
+                            ConnectTimeout = TimeSpan.FromSeconds(MinDnsSecodsToWait)
+                        });
                     });
 
                     // Build it

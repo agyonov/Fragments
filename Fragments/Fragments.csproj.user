@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ActiveDebugProfile>Tablet_10_API_27</ActiveDebugProfile>
-    <DefaultDevice>tablet</DefaultDevice>
+    <ActiveDebugProfile>Tablet_10.1_API_26</ActiveDebugProfile>
+    <DefaultDevice>Tablet_10.1_API_26</DefaultDevice>
     <AndroidDesignerPreferredDevice>10.1in WXGA %28Tablet%29</AndroidDesignerPreferredDevice>
     <AndroidDesignerPreferredTheme>Theme.MaterialComponents.DayNight.NoActionBar</AndroidDesignerPreferredTheme>
     <ActiveDebugFramework>net6.0-android</ActiveDebugFramework>
-    <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
-    <SelectedDevice>Tablet_10_API_27</SelectedDevice>
+    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
+    <SelectedDevice>Tablet_10.1_API_26</SelectedDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
